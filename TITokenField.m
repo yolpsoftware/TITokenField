@@ -114,7 +114,6 @@
 	[self bringSubviewToFront:tokenField];
 	[self updateContentSize];
     
-    [[[UIAlertView alloc] initWithTitle:@"test" message:@"msg" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:nil] show];
     ABAddressBookRef addressBook = ABAddressBookCreate();
     
     CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
@@ -314,22 +313,27 @@
 	NSArray * sourceCopy = [sourceArray copy];
 	for (NSString * sourceObject in sourceCopy){
 		
-		NSString * query = [self searchResultStringForRepresentedObject:sourceObject];
-		if ([query rangeOfString:substring options:NSCaseInsensitiveSearch].location != NSNotFound){
+        //if ([substring length] == 0) {
+        //    [resultsArray addObject:sourceObject];
+        //}
+        //else {
+            NSString * query = [self searchResultStringForRepresentedObject:sourceObject];
+            if ([query rangeOfString:substring options:NSCaseInsensitiveSearch].location != NSNotFound){
 			
-			BOOL shouldAdd = ![resultsArray containsObject:sourceObject];
-			if (shouldAdd && !showAlreadyTokenized){
+                BOOL shouldAdd = ![resultsArray containsObject:sourceObject];
+                if (shouldAdd && !showAlreadyTokenized){
 				
-				for (TIToken * token in tokenField.tokens){
-					if ([token.representedObject isEqual:sourceObject]){
-						shouldAdd = NO;
-						break;
-					}
-				}
-			}
+                    for (TIToken * token in tokenField.tokens){
+                        if ([token.representedObject isEqual:sourceObject]){
+                            shouldAdd = NO;
+                            break;
+                        }
+                    }
+                }
 			
-			if (shouldAdd) [resultsArray addObject:sourceObject];
-		}
+                if (shouldAdd) [resultsArray addObject:sourceObject];
+            }
+		//}
 	}
 	
 	[sourceCopy release];

@@ -18,7 +18,6 @@
 /* Begin PBXFileReference section */
 		DD7D39C01584FE1900990C5A /* libContactsTokenField.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libContactsTokenField.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD7D39C31584FE1900990C5A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		DD7D39C71584FE1900990C5A /* ContactsTokenField-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ContactsTokenField-Prefix.pch"; sourceTree = "<group>"; };
 		DD7D39C81584FE1900990C5A /* ContactsTokenField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactsTokenField.h; sourceTree = "<group>"; };
 		DD7D39C91584FE1900990C5A /* ContactsTokenField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactsTokenField.m; sourceTree = "<group>"; };
 		DD7D39D01584FE2900990C5A /* Names.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Names.h; path = ../../Names.h; sourceTree = "<group>"; };
@@ -81,7 +80,6 @@
 		DD7D39C61584FE1900990C5A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				DD7D39C71584FE1900990C5A /* ContactsTokenField-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

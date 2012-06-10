@@ -36,6 +36,7 @@
             [contactFirstLast release];
         }
 
+    
         [super setSourceArray:masterList];
         //[masterList release];
         
