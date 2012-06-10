@@ -9,17 +9,18 @@
 /* Begin PBXBuildFile section */
 		1D3623260D0F684500981E51 /* TokenFieldExampleAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* TokenFieldExampleAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
-		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		28D7ACF80DDB3853001CB0EB /* TokenFieldExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* TokenFieldExampleViewController.m */; };
+		DD7D39E215850D2000990C5A /* ContactsTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = DD7D39E115850D2000990C5A /* ContactsTokenField.m */; };
+		DD7D39E515850F6700990C5A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD7D39E415850F6700990C5A /* Foundation.framework */; };
+		DD7D39E715850FC300990C5A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD7D39E615850FC300990C5A /* AddressBook.framework */; };
 		E259CED91530FBE6002D0609 /* TITokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = E259CED81530FBE6002D0609 /* TITokenField.m */; };
 		E28950A215135A4E000FB56F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E28950A115135A4E000FB56F /* QuartzCore.framework */; };
 		E2EC196012F4AA7A00BB0A8B /* Names.m in Sources */ = {isa = PBXBuildFile; fileRef = E2EC195D12F4AA7A00BB0A8B /* Names.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* TokenFieldExampleAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenFieldExampleAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* TokenFieldExampleAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenFieldExampleAppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* TokenFieldExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TokenFieldExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -30,6 +31,10 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* TokenFieldExample_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenFieldExample_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* TokenFieldExample-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TokenFieldExample-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		DD7D39E015850D2000990C5A /* ContactsTokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactsTokenField.h; path = ../../ContactsTokenField/ContactsTokenField/ContactsTokenField.h; sourceTree = "<group>"; };
+		DD7D39E115850D2000990C5A /* ContactsTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContactsTokenField.m; path = ../../ContactsTokenField/ContactsTokenField/ContactsTokenField.m; sourceTree = "<group>"; };
+		DD7D39E415850F6700990C5A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DD7D39E615850FC300990C5A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		E259CED71530FBE6002D0609 /* TITokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TITokenField.h; path = ../../TITokenField.h; sourceTree = "<group>"; };
 		E259CED81530FBE6002D0609 /* TITokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TITokenField.m; path = ../../TITokenField.m; sourceTree = "<group>"; };
 		E28950A115135A4E000FB56F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -42,8 +47,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD7D39E715850FC300990C5A /* AddressBook.framework in Frameworks */,
+				DD7D39E515850F6700990C5A /* Foundation.framework in Frameworks */,
 				E28950A215135A4E000FB56F /* QuartzCore.framework in Frameworks */,
-				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
 			);
@@ -55,6 +61,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				DD7D39E015850D2000990C5A /* ContactsTokenField.h */,
+				DD7D39E115850D2000990C5A /* ContactsTokenField.m */,
 				1D3623240D0F684500981E51 /* TokenFieldExampleAppDelegate.h */,
 				1D3623250D0F684500981E51 /* TokenFieldExampleAppDelegate.m */,
 				28D7ACF60DDB3853001CB0EB /* TokenFieldExampleViewController.h */,
@@ -104,10 +112,11 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DD7D39E615850FC300990C5A /* AddressBook.framework */,
+				DD7D39E415850F6700990C5A /* Foundation.framework */,
+				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
 				E28950A115135A4E000FB56F /* QuartzCore.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
-				1D30AB110D05D00D00671497 /* Foundation.framework */,
-				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -190,6 +199,7 @@
 				28D7ACF80DDB3853001CB0EB /* TokenFieldExampleViewController.m in Sources */,
 				E2EC196012F4AA7A00BB0A8B /* Names.m in Sources */,
 				E259CED91530FBE6002D0609 /* TITokenField.m in Sources */,
+				DD7D39E215850D2000990C5A /* ContactsTokenField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,7 +216,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = TokenFieldExample_Prefix.pch;
 				INFOPLIST_FILE = "TokenFieldExample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = TokenFieldExample;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -220,7 +230,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = TokenFieldExample_Prefix.pch;
 				INFOPLIST_FILE = "TokenFieldExample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = TokenFieldExample;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -235,6 +245,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -247,6 +258,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 			};

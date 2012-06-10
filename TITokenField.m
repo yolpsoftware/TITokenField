@@ -8,6 +8,7 @@
 
 #import "TITokenField.h"
 #import <QuartzCore/QuartzCore.h>
+#import <AddressBook/AddressBook.h>
 
 //==========================================================
 #pragma mark - TITokenFieldView -
@@ -112,6 +113,27 @@
 	[self bringSubviewToFront:separator];
 	[self bringSubviewToFront:tokenField];
 	[self updateContentSize];
+    
+    [[[UIAlertView alloc] initWithTitle:@"test" message:@"msg" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:nil] show];
+    ABAddressBookRef addressBook = ABAddressBookCreate();
+    
+    CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
+    CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);
+    
+    NSMutableArray *masterList = [[NSMutableArray alloc] init];
+    for (int i = 0; i < nPeople; i++) {
+        ABRecordRef ref = CFArrayGetValueAtIndex(allPeople, i);
+        NSString* firstName = (NSString *)ABRecordCopyValue(ref, kABPersonFirstNameProperty);
+        NSString* lastName = (NSString *)ABRecordCopyValue(ref, kABPersonLastNameProperty);
+        NSString* contactFirstLast = [NSString stringWithFormat:@"%@%@%@", firstName, @" ", lastName];
+        //[ref getPhones];
+        [firstName release];
+        [lastName release];
+        [masterList addObject:contactFirstLast];
+        [contactFirstLast release];
+    }
+    
+    [self setSourceArray:masterList];
 }
 
 #pragma mark Property Overrides

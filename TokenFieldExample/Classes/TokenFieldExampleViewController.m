@@ -20,8 +20,10 @@
 	[self.view setBackgroundColor:[UIColor whiteColor]];
 	[self.navigationItem setTitle:@"Example"];
 	
-	tokenFieldView = [[TITokenFieldView alloc] initWithFrame:self.view.bounds];
-	[tokenFieldView setSourceArray:[Names listOfNames]];
+	//tokenFieldView = [[ContactsTokenField alloc] initWithFrame:self.view.bounds];
+    //[tokenFieldView setSourceArray:[Names listOfNames]];
+    tokenFieldView = [[TITokenFieldView alloc] initWithFrame:self.view.bounds];
+    //[tokenFieldView setSourceArray:[Names listOfNames]];
 	[self.view addSubview:tokenFieldView];
 	[tokenFieldView release];
 	

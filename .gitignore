@@ -12,3 +12,6 @@
 
 *.xcworkspace
 xcuserdata
+
+*.dat
+*.pch

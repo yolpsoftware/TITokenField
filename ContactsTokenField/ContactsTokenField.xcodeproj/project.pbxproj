@@ -1,0 +1,255 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DD7D39C41584FE1900990C5A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD7D39C31584FE1900990C5A /* Foundation.framework */; };
+		DD7D39CA1584FE1900990C5A /* ContactsTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = DD7D39C91584FE1900990C5A /* ContactsTokenField.m */; };
+		DD7D39D41584FE2900990C5A /* Names.h in Headers */ = {isa = PBXBuildFile; fileRef = DD7D39D01584FE2900990C5A /* Names.h */; };
+		DD7D39D51584FE2900990C5A /* Names.m in Sources */ = {isa = PBXBuildFile; fileRef = DD7D39D11584FE2900990C5A /* Names.m */; };
+		DD7D39D61584FE2900990C5A /* TITokenField.h in Headers */ = {isa = PBXBuildFile; fileRef = DD7D39D21584FE2900990C5A /* TITokenField.h */; };
+		DD7D39D71584FE2900990C5A /* TITokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = DD7D39D31584FE2900990C5A /* TITokenField.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		DD7D39C01584FE1900990C5A /* libContactsTokenField.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libContactsTokenField.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD7D39C31584FE1900990C5A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DD7D39C71584FE1900990C5A /* ContactsTokenField-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ContactsTokenField-Prefix.pch"; sourceTree = "<group>"; };
+		DD7D39C81584FE1900990C5A /* ContactsTokenField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactsTokenField.h; sourceTree = "<group>"; };
+		DD7D39C91584FE1900990C5A /* ContactsTokenField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactsTokenField.m; sourceTree = "<group>"; };
+		DD7D39D01584FE2900990C5A /* Names.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Names.h; path = ../../Names.h; sourceTree = "<group>"; };
+		DD7D39D11584FE2900990C5A /* Names.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Names.m; path = ../../Names.m; sourceTree = "<group>"; };
+		DD7D39D21584FE2900990C5A /* TITokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TITokenField.h; path = ../../TITokenField.h; sourceTree = "<group>"; };
+		DD7D39D31584FE2900990C5A /* TITokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TITokenField.m; path = ../../TITokenField.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DD7D39BD1584FE1900990C5A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD7D39C41584FE1900990C5A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DD7D39B51584FE1900990C5A = {
+			isa = PBXGroup;
+			children = (
+				DD7D39C51584FE1900990C5A /* ContactsTokenField */,
+				DD7D39C21584FE1900990C5A /* Frameworks */,
+				DD7D39C11584FE1900990C5A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DD7D39C11584FE1900990C5A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DD7D39C01584FE1900990C5A /* libContactsTokenField.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DD7D39C21584FE1900990C5A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DD7D39C31584FE1900990C5A /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DD7D39C51584FE1900990C5A /* ContactsTokenField */ = {
+			isa = PBXGroup;
+			children = (
+				DD7D39D01584FE2900990C5A /* Names.h */,
+				DD7D39D11584FE2900990C5A /* Names.m */,
+				DD7D39D21584FE2900990C5A /* TITokenField.h */,
+				DD7D39D31584FE2900990C5A /* TITokenField.m */,
+				DD7D39C81584FE1900990C5A /* ContactsTokenField.h */,
+				DD7D39C91584FE1900990C5A /* ContactsTokenField.m */,
+				DD7D39C61584FE1900990C5A /* Supporting Files */,
+			);
+			path = ContactsTokenField;
+			sourceTree = "<group>";
+		};
+		DD7D39C61584FE1900990C5A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DD7D39C71584FE1900990C5A /* ContactsTokenField-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		DD7D39BE1584FE1900990C5A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD7D39D41584FE2900990C5A /* Names.h in Headers */,
+				DD7D39D61584FE2900990C5A /* TITokenField.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		DD7D39BF1584FE1900990C5A /* ContactsTokenField */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD7D39CD1584FE1900990C5A /* Build configuration list for PBXNativeTarget "ContactsTokenField" */;
+			buildPhases = (
+				DD7D39BC1584FE1900990C5A /* Sources */,
+				DD7D39BD1584FE1900990C5A /* Frameworks */,
+				DD7D39BE1584FE1900990C5A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ContactsTokenField;
+			productName = ContactsTokenField;
+			productReference = DD7D39C01584FE1900990C5A /* libContactsTokenField.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DD7D39B71584FE1900990C5A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Yolp Softwaredesign GmbH";
+			};
+			buildConfigurationList = DD7D39BA1584FE1900990C5A /* Build configuration list for PBXProject "ContactsTokenField" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DD7D39B51584FE1900990C5A;
+			productRefGroup = DD7D39C11584FE1900990C5A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DD7D39BF1584FE1900990C5A /* ContactsTokenField */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DD7D39BC1584FE1900990C5A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD7D39CA1584FE1900990C5A /* ContactsTokenField.m in Sources */,
+				DD7D39D51584FE2900990C5A /* Names.m in Sources */,
+				DD7D39D71584FE2900990C5A /* TITokenField.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		DD7D39CB1584FE1900990C5A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		DD7D39CC1584FE1900990C5A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DD7D39CE1584FE1900990C5A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/ContactsTokenField.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ContactsTokenField/ContactsTokenField-Prefix.pch";
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		DD7D39CF1584FE1900990C5A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/ContactsTokenField.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ContactsTokenField/ContactsTokenField-Prefix.pch";
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DD7D39BA1584FE1900990C5A /* Build configuration list for PBXProject "ContactsTokenField" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD7D39CB1584FE1900990C5A /* Debug */,
+				DD7D39CC1584FE1900990C5A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD7D39CD1584FE1900990C5A /* Build configuration list for PBXNativeTarget "ContactsTokenField" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD7D39CE1584FE1900990C5A /* Debug */,
+				DD7D39CF1584FE1900990C5A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DD7D39B71584FE1900990C5A /* Project object */;
+}
