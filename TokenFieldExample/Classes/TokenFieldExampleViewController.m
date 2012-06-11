@@ -22,7 +22,7 @@
 	
 	//tokenFieldView = [[ContactsTokenField alloc] initWithFrame:self.view.bounds];
     //[tokenFieldView setSourceArray:[Names listOfNames]];
-    tokenFieldView = [[TITokenFieldView alloc] initWithFrame:self.view.bounds];
+    tokenFieldView = [[TITokenFieldView alloc] initWithFrame:self.view.bounds addressType:YES prompt:@"CC: "];
     //[tokenFieldView setSourceArray:[Names listOfNames]];
 	[self.view addSubview:tokenFieldView];
 	[tokenFieldView release];
