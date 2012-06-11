@@ -86,6 +86,7 @@
 
 - (void)updateContentSize;
 - (NSArray *)getTokens;
+- (void)addToken: (NSString *)token;
 
 @end
 

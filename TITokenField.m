@@ -204,6 +204,21 @@
 	return tokenField.tokenObjects;
 }
 
+- (void)addToken: (NSString *)token {
+    NSRange range = [token rangeOfString:@"$" options:NSCaseInsensitiveSearch];
+    NSString* title;
+    if(range.location != NSNotFound) {
+        NSArray * chunks = [token componentsSeparatedByString: @"$"];
+        title = [chunks objectAtIndex:0];
+    }
+    else {
+        title = token;
+    }
+    
+	TIToken * theToken = [tokenField addTokenWithTitle:title	];
+	[theToken setRepresentedObject:token];
+}
+
 #pragma mark Event Handling
 - (void)layoutSubviews {
 	
