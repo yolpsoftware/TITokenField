@@ -15,6 +15,7 @@
 //==========================================================
 
 @interface TITokenFieldView (Private)
+- (void)setupWithAddressType:(BOOL)sms prompt:(NSString*)prompt;
 - (void)setup;
 - (NSString *)displayStringForRepresentedObject:(id)object;
 - (NSString *)searchResultStringForRepresentedObject:(id)object;
@@ -51,7 +52,20 @@
 	return self;
 }
 
+- (id)initWithFrame:(CGRect)frame addressType:(BOOL)sms prompt:(NSString*)prompt {
+	
+    if ((self = [super initWithFrame:frame])){
+		[self setupWithAddressType:sms prompt:prompt];
+	}
+	
+    return self;
+}
+
 - (void)setup {
+    [self setupWithAddressType:YES prompt:@"To"];
+}
+
+- (void)setupWithAddressType:(BOOL)sms prompt:(NSString*)prompt {
 	
 	[self setBackgroundColor:[UIColor clearColor]];
 	[self setDelaysContentTouches:YES];
@@ -125,11 +139,33 @@
         NSString* firstName = (NSString *)ABRecordCopyValue(ref, kABPersonFirstNameProperty);
         NSString* lastName = (NSString *)ABRecordCopyValue(ref, kABPersonLastNameProperty);
         NSString* contactFirstLast = [NSString stringWithFormat:@"%@%@%@", firstName, @" ", lastName];
-        //[ref getPhones];
         [firstName release];
         [lastName release];
-        [masterList addObject:contactFirstLast];
-        [contactFirstLast release];
+        if (sms) {
+            ABMultiValueRef phones =(NSString*)ABRecordCopyValue(ref, kABPersonPhoneProperty);
+            for(CFIndex j = 0; j < ABMultiValueGetCount(phones); j++) {
+                NSString* mobileLabel = (NSString*)ABMultiValueCopyLabelAtIndex(phones, j);
+                mobileLabel = [[mobileLabel componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"!<>$_"]] componentsJoinedByString: @""];
+                NSString* mobile = (NSString*)ABMultiValueCopyValueAtIndex(phones, j);
+                NSString* token = [NSString stringWithFormat:@"%@%@%@%@%@", contactFirstLast, @"$", mobileLabel, @"$", mobile];
+                
+                //if([mobileLabel isEqualToString:(NSString *)kABPersonPhoneMobileLabel])
+                [masterList addObject:token];
+            }
+        }
+        else {
+            ABMultiValueRef emails =(NSString*)ABRecordCopyValue(ref, kABPersonEmailProperty);
+            for(CFIndex j = 0; j < ABMultiValueGetCount(emails); j++) {
+                NSString* emailLabel = (NSString*)ABMultiValueCopyLabelAtIndex(emails, j);
+                emailLabel = [[emailLabel componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"!<>$_"]] componentsJoinedByString: @""];
+                NSString* email = (NSString*)ABMultiValueCopyValueAtIndex(emails, j);
+                NSString* token = [NSString stringWithFormat:@"%@%@%@%@%@", contactFirstLast, @"$", emailLabel, @"$", email];
+                
+                //if([mobileLabel isEqualToString:(NSString *)kABPersonPhoneMobileLabel])
+                [masterList addObject:token];
+            }
+        }
+        //[contactFirstLast release];
     }
     
     [self setSourceArray:masterList];
@@ -162,6 +198,10 @@
 
 - (NSArray *)tokenTitles {
 	return tokenField.tokenTitles;
+}
+
+- (NSArray *)getTokens {
+	return tokenField.tokenObjects;
 }
 
 #pragma mark Event Handling
@@ -220,16 +260,39 @@
     static NSString * CellIdentifier = @"ResultsCell";
     
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (!cell) cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-	[cell.textLabel setText:[self searchResultStringForRepresentedObject:representedObject]];
-	
+    if (!cell) cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+    NSString * cellText = [self searchResultStringForRepresentedObject:representedObject];
+
+    NSRange range = [cellText rangeOfString:@"$" options:NSCaseInsensitiveSearch];
+    if(range.location != NSNotFound) {
+        NSArray * chunks = [cellText componentsSeparatedByString: @"$"];
+        [cell.textLabel setText: [chunks objectAtIndex:0]];
+        if ([chunks count] > 2) {
+            [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@%@%@", [chunks objectAtIndex:1], @": ", [chunks objectAtIndex:2]]];
+        }
+        else {
+            [cell.detailTextLabel setText:[chunks objectAtIndex:1]];
+        }
+        //[chunks release];
+    }
+    else {
+        [cell.textLabel setText: cellText];
+    }
+         
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	id representedObject = [resultsArray objectAtIndex:indexPath.row];
-	TIToken * token = [tokenField addTokenWithTitle:[self displayStringForRepresentedObject:representedObject]];
+    NSString * cellText = [self searchResultStringForRepresentedObject:representedObject];
+    NSRange range = [cellText rangeOfString:@"$" options:NSCaseInsensitiveSearch];
+    if(range.location != NSNotFound) {
+        NSArray * chunks = [cellText componentsSeparatedByString: @"$"];
+        cellText = [chunks objectAtIndex:0];
+    }
+
+	TIToken * token = [tokenField addTokenWithTitle:cellText];
 	[token setRepresentedObject:representedObject];
 	
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -387,6 +450,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 
 @interface TITokenField (Private)
 - (void)setup;
+- (void)setupWithAddressType:(BOOL)sms prompt:(NSString*)prompt;
 - (CGFloat)layoutTokensInternal;
 @end
 
@@ -410,6 +474,15 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
     return self;
 }
 
+- (id)initWithFrame:(CGRect)frame addressType:(BOOL)sms prompt:(NSString*)prompt {
+	
+    if ((self = [super initWithFrame:frame])){
+		[self setupWithAddressType:sms prompt:prompt];
+    }
+	
+    return self;
+}
+
 - (id)initWithCoder:(NSCoder *)aDecoder {
 	
 	if ((self = [super initWithCoder:aDecoder])){
@@ -419,8 +492,8 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	return self;
 }
 
-- (void)setup {
-	
+- (void)setupWithAddressType:(BOOL)sms prompt:(NSString*)prompt {
+        
 	[self setBorderStyle:UITextBorderStyleNone];
 	[self setFont:[UIFont systemFontOfSize:14]];
 	[self setBackgroundColor:[UIColor whiteColor]];
@@ -435,7 +508,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	[self.layer setShadowOpacity:0.6];
 	[self.layer setShadowRadius:12];
 	
-	[self setPromptText:@"To:"];
+	[self setPromptText:prompt];
 	[self setText:kTextEmpty];
 	
 	internalDelegate = [[TITokenFieldInternalDelegate alloc] init];
@@ -445,7 +518,11 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	tokens = [[NSMutableArray alloc] init];
 	editable = YES;
 	removesTokensOnEndEditing = YES;
-	tokenizingCharacters = [[NSCharacterSet characterSetWithCharactersInString:@","] retain];
+	tokenizingCharacters = [[NSCharacterSet characterSetWithCharactersInString:@";"] retain];
+}
+
+- (void)setup {
+    [self setupWithAddressType:NO prompt:@"To:"];
 }
 
 #pragma mark Property Overrides

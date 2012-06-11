@@ -82,7 +82,10 @@
 @property (nonatomic, copy) NSArray * sourceArray;
 @property (nonatomic, readonly) NSArray * tokenTitles;
 
+- (id)initWithFrame:(CGRect)frame addressType:(BOOL)sms prompt:(NSString*)prompt;
+
 - (void)updateContentSize;
+- (NSArray *)getTokens;
 
 @end
 
@@ -122,6 +125,8 @@ typedef enum {
 @property (nonatomic, assign) BOOL removesTokensOnEndEditing;
 @property (nonatomic, readonly) int numberOfLines;
 @property (nonatomic, retain) NSCharacterSet * tokenizingCharacters;
+
+- (id)initWithFrame:(CGRect)frame addressType:(BOOL)sms prompt:(NSString*)prompt;
 
 - (void)addToken:(TIToken *)title;
 - (TIToken *)addTokenWithTitle:(NSString *)title;
