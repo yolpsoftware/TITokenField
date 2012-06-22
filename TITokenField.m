@@ -9,6 +9,7 @@
 #import "TITokenField.h"
 #import <QuartzCore/QuartzCore.h>
 #import <AddressBook/AddressBook.h>
+#import <Foundation/NSBundle.h>
 
 //==========================================================
 #pragma mark - TITokenFieldView -
@@ -138,14 +139,29 @@
         ABRecordRef ref = CFArrayGetValueAtIndex(allPeople, i);
         NSString* firstName = (NSString *)ABRecordCopyValue(ref, kABPersonFirstNameProperty);
         NSString* lastName = (NSString *)ABRecordCopyValue(ref, kABPersonLastNameProperty);
-        NSString* contactFirstLast = [NSString stringWithFormat:@"%@%@%@", firstName, @" ", lastName];
-        [firstName release];
-        [lastName release];
+        NSString* contactFirstLast;
+        if ([firstName length] == 0) {
+            if ([lastName length] == 0) {
+                contactFirstLast = (NSString *)ABRecordCopyValue(ref, kABPersonOrganizationProperty);
+            }
+            else {
+                contactFirstLast = lastName;
+            }
+        }
+        else if ([lastName length] == 0) {
+            contactFirstLast = firstName;
+        }
+        else {
+            contactFirstLast = [NSString stringWithFormat:@"%@%@%@", firstName, @" ", lastName];
+            [firstName release];
+            [lastName release];
+        }
         if (sms) {
             ABMultiValueRef phones =(NSString*)ABRecordCopyValue(ref, kABPersonPhoneProperty);
             for(CFIndex j = 0; j < ABMultiValueGetCount(phones); j++) {
                 NSString* mobileLabel = (NSString*)ABMultiValueCopyLabelAtIndex(phones, j);
                 mobileLabel = [[mobileLabel componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"!<>$_"]] componentsJoinedByString: @""];
+                mobileLabel = NSLocalizedString(mobileLabel, nil);
                 NSString* mobile = (NSString*)ABMultiValueCopyValueAtIndex(phones, j);
                 NSString* token = [NSString stringWithFormat:@"%@%@%@%@%@", contactFirstLast, @"$", mobileLabel, @"$", mobile];
                 
@@ -158,6 +174,7 @@
             for(CFIndex j = 0; j < ABMultiValueGetCount(emails); j++) {
                 NSString* emailLabel = (NSString*)ABMultiValueCopyLabelAtIndex(emails, j);
                 emailLabel = [[emailLabel componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"!<>$_"]] componentsJoinedByString: @""];
+                emailLabel = NSLocalizedString(emailLabel, nil);
                 NSString* email = (NSString*)ABMultiValueCopyValueAtIndex(emails, j);
                 NSString* token = [NSString stringWithFormat:@"%@%@%@%@%@", contactFirstLast, @"$", emailLabel, @"$", email];
                 
@@ -215,7 +232,7 @@
         title = token;
     }
     
-	TIToken * theToken = [tokenField addTokenWithTitle:title	];
+	TIToken * theToken = [tokenField addTokenWithTitle:title];
 	[theToken setRepresentedObject:token];
 }
 
@@ -283,7 +300,12 @@
         NSArray * chunks = [cellText componentsSeparatedByString: @"$"];
         [cell.textLabel setText: [chunks objectAtIndex:0]];
         if ([chunks count] > 2) {
-            [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@%@%@", [chunks objectAtIndex:1], @": ", [chunks objectAtIndex:2]]];
+            if ([[chunks objectAtIndex:1] length] == 0) {
+                [cell.detailTextLabel setText:[chunks objectAtIndex:2]];
+            }
+            else {
+                [cell.detailTextLabel setText:[NSString stringWithFormat:@"%@%@%@", [chunks objectAtIndex:1], @": ", [chunks objectAtIndex:2]]];
+            }
         }
         else {
             [cell.detailTextLabel setText:[chunks objectAtIndex:1]];

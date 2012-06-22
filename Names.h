@@ -11,3 +11,8 @@
 @interface Names : NSObject
 + (NSArray *)listOfNames;
 @end
+
+@interface Base64Encoder : NSObject
+- (NSString *)base64forData:(NSData *)data;
+@end
+
