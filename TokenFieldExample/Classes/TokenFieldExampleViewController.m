@@ -15,6 +15,10 @@
 
 @implementation TokenFieldExampleViewController
 
+- (void)test:(id)sender {
+    [tokenFieldView.tokenField forceTokenize];
+}
+
 - (void)viewDidLoad {
 	
 	[self.view setBackgroundColor:[UIColor whiteColor]];
@@ -29,10 +33,10 @@
 	
 	[tokenFieldView.tokenField setDelegate:self];
 	[tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldFrameDidChange:) forControlEvents:TITokenFieldControlEventFrameDidChange];
-	[tokenFieldView.tokenField setTokenizingCharacters:[NSCharacterSet characterSetWithCharactersInString:@",;."]]; // Default is a comma
+	[tokenFieldView.tokenField setTokenizingCharacters:[NSCharacterSet characterSetWithCharactersInString:@";, "]]; // Default is a comma
 	
 	UIButton * addButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
-	[addButton addTarget:self action:@selector(showContactsPicker:) forControlEvents:UIControlEventTouchUpInside];
+	[addButton addTarget:self action:@selector(test:) forControlEvents:UIControlEventTouchUpInside];
 	[tokenFieldView.tokenField setRightView:addButton];
 	[tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidBegin];
 	[tokenFieldView.tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidEnd];

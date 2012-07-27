@@ -529,6 +529,11 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	return self;
 }
 
+- (void)setTokenizing:(NSString *)characters {
+    
+    [self setTokenizingCharacters:[NSCharacterSet characterSetWithCharactersInString:characters]];
+}
+
 - (void)setupWithAddressType:(BOOL)sms prompt:(NSString*)prompt {
         
 	[self setBorderStyle:UITextBorderStyleNone];
@@ -555,7 +560,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	tokens = [[NSMutableArray alloc] init];
 	editable = YES;
 	removesTokensOnEndEditing = YES;
-	tokenizingCharacters = [[NSCharacterSet characterSetWithCharactersInString:@";"] retain];
+	tokenizingCharacters = [[NSCharacterSet characterSetWithCharactersInString:@"; "] retain];
 }
 
 - (void)setup {
@@ -617,7 +622,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	for (TIToken * token in tokens) [self addToken:token];
 }
 
-- (void)didEndEditing {
+- (void)doEndEditing {
 	
 	[selectedToken setSelected:NO];
 	selectedToken = nil;
@@ -650,6 +655,14 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	}
 	
 	[self setResultsModeEnabled:NO];
+}
+
+- (void)didEndEditing {
+    [self doEndEditing];
+}
+
+- (void)forceTokenize {
+    [self doEndEditing];
 }
 
 - (void)didChangeText {
@@ -753,7 +766,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 }
 
 - (void)tokenizeText {
-	
+	NSLog(@"%@", self.text);
 	if (![self.text isEqualToString:kTextEmpty] && ![self.text isEqualToString:kTextHidden]){
 		for (NSString * component in [self.text componentsSeparatedByCharactersInSet:tokenizingCharacters]){
 			[self addTokenWithTitle:[component stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
@@ -990,8 +1003,10 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 		[tokenField removeToken:tokenField.selectedToken];
 		return (![string isEqualToString:@""]);
 	}
-	
-	if ([string rangeOfCharacterFromSet:tokenField.tokenizingCharacters].location != NSNotFound){
+	//NSLog(@"%@", range);
+	NSLog(@"%@", string);
+    NSUInteger rn = [string rangeOfCharacterFromSet:tokenField.tokenizingCharacters].location;
+	if (rn != NSNotFound){
 		[tokenField tokenizeText];
 		return NO;
 	}
