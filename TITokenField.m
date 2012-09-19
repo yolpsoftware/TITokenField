@@ -1072,7 +1072,7 @@ CGPathRef CGPathCreateDisclosureIndicatorPath(CGPoint arrowPointFront, CGFloat h
 
     BOOL showAccessoryView = accessoryType == TITokenAccessoryTypeNone && accessoryView;
     if(showAccessoryView) {
-        accessoryWidth += floorf(hTextPadding);
+        accessoryWidth = accessoryView.frame.size.width;
     }
 
 
