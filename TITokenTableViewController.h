@@ -54,6 +54,11 @@
 */
 -(void) tokenTableViewController:(TITokenTableViewController *) tokenTableViewController  didSelectTokenField:(TITokenField*) tokenField;
 
+/**
+* Called when a cell that is NOT a TIToken cell is selected
+*/
+- (void)tokenTableViewController:(TITokenTableViewController *)tableView didSelectRowAtIndex:(NSInteger)row;
+
 @end
 
 

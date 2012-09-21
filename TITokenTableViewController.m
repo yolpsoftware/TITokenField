@@ -7,7 +7,7 @@
 //
 
 #import "TITokenTableViewController.h"
-#import "Names.h"
+
 
 
 
@@ -83,7 +83,7 @@
     }
     
     
-     [self setSourceArray:[Names listOfNames]];
+
     
     showAlreadyTokenized = NO;
     resultsArray = [[NSMutableArray alloc] init];
@@ -118,7 +118,7 @@
    		popoverController = nil;
    	}
     
-    self.tableView.allowsSelection = NO;
+    //self.tableView.allowsSelection = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
    	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -290,7 +290,15 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+
+    if (tableView == self.tableView) {
+        if ([self.delegate respondsToSelector:@selector(tokenTableViewController:didSelectRowAtIndex:)]) {
+            NSInteger row = indexPath.row - self.tokenDataSource.numberOfTokenRows;
+            [self.delegate tokenTableViewController:self didSelectRowAtIndex:row];
+        }
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+
     if (tableView == resultsTable) {
         
         TITokenField *tokenField = _currentSelectedTokenField;
