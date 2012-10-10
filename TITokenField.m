@@ -1086,7 +1086,14 @@ CGPathRef CGPathCreateDisclosureIndicatorPath(CGPoint arrowPointFront, CGFloat h
 
 
     CGSize titleSize = [title sizeWithFont:font forWidth:(maxWidth - hTextPadding - accessoryWidth) lineBreakMode:kLineBreakMode];
+    CGSize emptyTitleSize = [@" " sizeWithFont:font forWidth:(maxWidth - hTextPadding - accessoryWidth) lineBreakMode:kLineBreakMode];
    	CGFloat height = floorf(titleSize.height + vTextPadding);
+
+    // the title is empty, make sure that the bubble is high as if there were actually some text
+    if([title isEqualToString:@""]) {
+        height = floorf(emptyTitleSize.height + vTextPadding);
+    }
+
    	[self setFrame:((CGRect){self.frame.origin, {MAX(floorf(titleSize.width + hTextPadding + accessoryWidth), height - 3), height}})];
 
 
