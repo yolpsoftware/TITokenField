@@ -129,6 +129,8 @@ typedef enum {
 
 @property (nonatomic) BOOL visible;
 
+- (void)setVisible:(BOOL)visible animated:(BOOL)animated;
+
 - (void)addToken:(TIToken *)title;
 - (TIToken *)addTokenWithTitle:(NSString *)title;
 - (TIToken *)addTokenWithTitle:(NSString *)title representedObject:(id)object;
