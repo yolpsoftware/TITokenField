@@ -83,6 +83,9 @@
 @property (nonatomic, copy) NSArray * sourceArray;
 @property (nonatomic, readonly) NSArray * tokenTitles;
 
+// To show/hide the token fields
+@property (nonatomic) BOOL showTokenFields;
+
 - (void)updateContentSize;
 
 @end
@@ -123,6 +126,8 @@ typedef enum {
 @property (nonatomic, assign) BOOL removesTokensOnEndEditing;
 @property (nonatomic, readonly) int numberOfLines;
 @property (nonatomic, retain) NSCharacterSet * tokenizingCharacters;
+
+@property (nonatomic) BOOL visible;
 
 - (void)addToken:(TIToken *)title;
 - (TIToken *)addTokenWithTitle:(NSString *)title;

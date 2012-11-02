@@ -709,12 +709,26 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	return tokenCaret.y + lineHeight;
 }
 
+#pragma mark - 
+
+- (void)setVisible:(BOOL)visible animated:(BOOL)animated
+{
+	_visible = visible;
+	[self layoutTokensAnimated:animated];
+}
+
+- (void)setVisible:(BOOL)visible
+{
+	[self setVisible:visible animated:YES];
+}
+
 #pragma mark View Handlers
 - (void)layoutTokensAnimated:(BOOL)animated {
 	
-	CGFloat newHeight = [self layoutTokensInternal];
-	if (self.bounds.size.height != newHeight){
-		
+	CGFloat newHeight = self.visible ? [self layoutTokensInternal] : 0;
+	
+	if (self.bounds.size.height != newHeight)
+	{	
 		// Animating this seems to invoke the triple-tap-delete-key-loop-problem-thing™
 		[UIView animateWithDuration:(animated ? 0.3 : 0) animations:^{
 			[self setFrame:((CGRect){self.frame.origin, {self.bounds.size.width, newHeight}})];
