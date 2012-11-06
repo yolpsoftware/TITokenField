@@ -75,6 +75,9 @@
 	UIPopoverController * popoverController;
 }
 
+@property (nonatomic) CGFloat separatorHeight;
+@property (nonatomic, retain) UIColor *separatorColor;
+
 @property (nonatomic, assign) BOOL showAlreadyTokenized;
 @property (nonatomic, readonly) TITokenField * tokenField;
 @property (nonatomic, readonly) UIView * separator;

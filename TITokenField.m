@@ -30,6 +30,8 @@
 @synthesize contentView;
 @synthesize separator;
 @synthesize sourceArray;
+@synthesize separatorColor = _separatorColor;
+@synthesize separatorHeight = _separatorHeight;
 
 #pragma mark Init
 - (id)initWithFrame:(CGRect)frame {
@@ -52,6 +54,9 @@
 
 - (void)setup {
 	
+	// Default separator height
+	_separatorHeight = 1.0;
+	
 	[self setBackgroundColor:[UIColor clearColor]];
 	[self setDelaysContentTouches:YES];
 	[self setMultipleTouchEnabled:NO];
@@ -71,14 +76,14 @@
 	
 	CGFloat tokenFieldBottom = CGRectGetMaxY(tokenField.frame);
 	
-	separator = [[UIView alloc] initWithFrame:CGRectMake(0, tokenFieldBottom, self.bounds.size.width, 1)];
-	[separator setBackgroundColor:[UIColor colorWithWhite:0.7 alpha:1]];
+	separator = [[UIView alloc] initWithFrame:CGRectMake(0, tokenFieldBottom, self.bounds.size.width, _separatorHeight)];
+	[separator setBackgroundColor:self.separatorColor];
 	[self addSubview:separator];
 	[separator release];
 	
 	// This view is created for convenience, because it resizes and moves with the rest of the subviews.
-	contentView = [[UIView alloc] initWithFrame:CGRectMake(0, tokenFieldBottom + 1, self.bounds.size.width,
-														   self.bounds.size.height - tokenFieldBottom - 1)];
+	contentView = [[UIView alloc] initWithFrame:CGRectMake(0, tokenFieldBottom + _separatorHeight, self.bounds.size.width,
+														   self.bounds.size.height - tokenFieldBottom - _separatorHeight)];
 	[contentView setBackgroundColor:[UIColor clearColor]];
 	[self addSubview:contentView];
 	[contentView release];
@@ -97,7 +102,7 @@
 	}
 	else
 	{
-		resultsTable = [[UITableView alloc] initWithFrame:CGRectMake(0, tokenFieldBottom + 1, self.bounds.size.width, 10)];
+		resultsTable = [[UITableView alloc] initWithFrame:CGRectMake(0, tokenFieldBottom + _separatorHeight, self.bounds.size.width, 10)];
 		[resultsTable setSeparatorColor:[UIColor colorWithWhite:0.85 alpha:1]];
 		[resultsTable setBackgroundColor:[UIColor colorWithRed:0.92 green:0.92 blue:0.92 alpha:1]];
 		[resultsTable setDelegate:self];
@@ -114,6 +119,41 @@
 	[self updateContentSize];
 }
 
+#pragma mark - Separator customization
+
+- (UIColor *)separatorColor
+{
+	if (!_separatorColor)
+	{
+		_separatorColor = [[UIColor colorWithWhite:0.7 alpha:1] retain];
+	}
+	
+	return _separatorColor;
+}
+
+- (void)setSeparatorColor:(UIColor *)separatorColor
+{
+	if (_separatorColor != separatorColor)
+	{
+		[_separatorColor autorelease];
+		_separatorColor = [separatorColor retain];
+		self.separator.backgroundColor = separatorColor;
+		[self setNeedsDisplay];
+	}
+}
+
+- (void)setSeparatorHeight:(CGFloat)separatorHeight
+{
+	if (_separatorHeight != separatorHeight)
+	{
+		_separatorHeight = separatorHeight;
+		CGRect frame = self.separator.frame;
+		frame.size.height = separatorHeight;
+		self.separator.frame = frame;
+		[self setNeedsLayout];
+	}
+}
+
 #pragma mark Property Overrides
 - (void)setFrame:(CGRect)frame {
 	
@@ -122,7 +162,7 @@
 	CGFloat width = frame.size.width;
 	[separator setFrame:((CGRect){separator.frame.origin, {width, separator.bounds.size.height}})];
 	[resultsTable setFrame:((CGRect){resultsTable.frame.origin, {width, resultsTable.bounds.size.height}})];
-	[contentView setFrame:((CGRect){contentView.frame.origin, {width, (frame.size.height - CGRectGetMaxY(tokenField.frame))}})];
+	[contentView setFrame:((CGRect){contentView.frame.origin, {width, (frame.size.height - CGRectGetMaxY(tokenField.frame) - self.separatorHeight)}})];
 	[tokenField setFrame:((CGRect){tokenField.frame.origin, {width, tokenField.bounds.size.height}})];
 	
 	if (popoverController.popoverVisible){
@@ -154,7 +194,7 @@
 }
 
 - (void)updateContentSize {
-	[self setContentSize:CGSizeMake(self.bounds.size.width, CGRectGetMaxY(contentView.frame) + 1)];
+	[self setContentSize:CGSizeMake(self.bounds.size.width, CGRectGetMaxY(contentView.frame) + self.separatorHeight)];
 }
 
 - (BOOL)canBecomeFirstResponder {
@@ -238,8 +278,8 @@
 	
 	CGFloat tokenFieldBottom = CGRectGetMaxY(tokenField.frame);
 	[separator setFrame:((CGRect){{separator.frame.origin.x, tokenFieldBottom}, separator.bounds.size})];
-	[resultsTable setFrame:((CGRect){{resultsTable.frame.origin.x, (tokenFieldBottom + 1)}, resultsTable.bounds.size})];
-	[contentView setFrame:((CGRect){{contentView.frame.origin.x, (tokenFieldBottom + 1)}, contentView.bounds.size})];
+	[resultsTable setFrame:((CGRect){{resultsTable.frame.origin.x, (tokenFieldBottom + self.separatorHeight)}, resultsTable.bounds.size})];
+	[contentView setFrame:((CGRect){{contentView.frame.origin.x, (tokenFieldBottom + self.separatorHeight)}, contentView.bounds.size})];
 }
 
 - (void)tokenFieldFrameDidChange:(TITokenField *)field {
@@ -356,6 +396,7 @@
 	[resultsArray release];
 	[sourceArray release];
 	[popoverController release];
+	[_separatorColor release];
 	[super dealloc];
 }
 
