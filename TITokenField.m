@@ -198,15 +198,7 @@
 }
 
 - (BOOL)canBecomeFirstResponder {
-	return YES;
-}
-
-- (BOOL)becomeFirstResponder {
-	return [tokenField becomeFirstResponder];
-}
-
-- (BOOL)resignFirstResponder {
-	return [tokenField resignFirstResponder];
+	return NO;
 }
 
 #pragma mark TableView Methods
