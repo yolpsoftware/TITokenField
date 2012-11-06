@@ -455,6 +455,8 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 
 - (void)setup {
 	
+	_visible = YES;
+	
 	[self setBorderStyle:UITextBorderStyleNone];
 	[self setFont:[UIFont systemFontOfSize:14]];
 	[self setBackgroundColor:[UIColor whiteColor]];
