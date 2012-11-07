@@ -30,6 +30,8 @@
 @synthesize contentView;
 @synthesize separator;
 @synthesize sourceArray;
+@synthesize separatorColor = _separatorColor;
+@synthesize separatorHeight = _separatorHeight;
 
 #pragma mark Init
 - (id)initWithFrame:(CGRect)frame {
@@ -52,6 +54,9 @@
 
 - (void)setup {
 	
+	// Default separator height
+	_separatorHeight = 1.0;
+	
 	[self setBackgroundColor:[UIColor clearColor]];
 	[self setDelaysContentTouches:YES];
 	[self setMultipleTouchEnabled:NO];
@@ -71,14 +76,14 @@
 	
 	CGFloat tokenFieldBottom = CGRectGetMaxY(tokenField.frame);
 	
-	separator = [[UIView alloc] initWithFrame:CGRectMake(0, tokenFieldBottom, self.bounds.size.width, 1)];
-	[separator setBackgroundColor:[UIColor colorWithWhite:0.7 alpha:1]];
+	separator = [[UIView alloc] initWithFrame:CGRectMake(0, tokenFieldBottom, self.bounds.size.width, _separatorHeight)];
+	[separator setBackgroundColor:self.separatorColor];
 	[self addSubview:separator];
 
 	
 	// This view is created for convenience, because it resizes and moves with the rest of the subviews.
-	contentView = [[UIView alloc] initWithFrame:CGRectMake(0, tokenFieldBottom + 1, self.bounds.size.width,
-														   self.bounds.size.height - tokenFieldBottom - 1)];
+	contentView = [[UIView alloc] initWithFrame:CGRectMake(0, tokenFieldBottom + _separatorHeight, self.bounds.size.width,
+														   self.bounds.size.height - tokenFieldBottom - _separatorHeight)];
 	[contentView setBackgroundColor:[UIColor clearColor]];
 	[self addSubview:contentView];
 
@@ -97,7 +102,7 @@
 	}
 	else
 	{
-		resultsTable = [[UITableView alloc] initWithFrame:CGRectMake(0, tokenFieldBottom + 1, self.bounds.size.width, 10)];
+		resultsTable = [[UITableView alloc] initWithFrame:CGRectMake(0, tokenFieldBottom + _separatorHeight, self.bounds.size.width, 10)];
 		[resultsTable setSeparatorColor:[UIColor colorWithWhite:0.85 alpha:1]];
 		[resultsTable setBackgroundColor:[UIColor colorWithRed:0.92 green:0.92 blue:0.92 alpha:1]];
 		[resultsTable setDelegate:self];
@@ -114,6 +119,40 @@
 	[self updateContentSize];
 }
 
+#pragma mark - Separator customization
+
+- (UIColor *)separatorColor
+{
+	if (!_separatorColor)
+	{
+		_separatorColor = [UIColor colorWithWhite:0.7 alpha:1];
+	}
+	
+	return _separatorColor;
+}
+
+- (void)setSeparatorColor:(UIColor *)separatorColor
+{
+	if (_separatorColor != separatorColor)
+	{
+		_separatorColor = separatorColor;
+		self.separator.backgroundColor = separatorColor;
+		[self setNeedsDisplay];
+	}
+}
+
+- (void)setSeparatorHeight:(CGFloat)separatorHeight
+{
+	if (_separatorHeight != separatorHeight)
+	{
+		_separatorHeight = separatorHeight;
+		CGRect frame = self.separator.frame;
+		frame.size.height = separatorHeight;
+		self.separator.frame = frame;
+		[self setNeedsLayout];
+	}
+}
+
 #pragma mark Property Overrides
 - (void)setFrame:(CGRect)frame {
 	
@@ -122,7 +161,7 @@
 	CGFloat width = frame.size.width;
 	[separator setFrame:((CGRect){separator.frame.origin, {width, separator.bounds.size.height}})];
 	[resultsTable setFrame:((CGRect){resultsTable.frame.origin, {width, resultsTable.bounds.size.height}})];
-	[contentView setFrame:((CGRect){contentView.frame.origin, {width, (frame.size.height - CGRectGetMaxY(tokenField.frame))}})];
+	[contentView setFrame:((CGRect){contentView.frame.origin, {width, (frame.size.height - CGRectGetMaxY(tokenField.frame) - self.separatorHeight)}})];
 	[tokenField setFrame:((CGRect){tokenField.frame.origin, {width, tokenField.bounds.size.height}})];
 	
 	if (popoverController.popoverVisible){
@@ -154,19 +193,11 @@
 }
 
 - (void)updateContentSize {
-	[self setContentSize:CGSizeMake(self.bounds.size.width, CGRectGetMaxY(contentView.frame) + 1)];
+	[self setContentSize:CGSizeMake(self.bounds.size.width, CGRectGetMaxY(contentView.frame) + self.separatorHeight)];
 }
 
 - (BOOL)canBecomeFirstResponder {
-	return YES;
-}
-
-- (BOOL)becomeFirstResponder {
-	return [tokenField becomeFirstResponder];
-}
-
-- (BOOL)resignFirstResponder {
-	return [tokenField resignFirstResponder];
+	return NO;
 }
 
 #pragma mark TableView Methods
@@ -247,8 +278,8 @@
 	
 	CGFloat tokenFieldBottom = CGRectGetMaxY(tokenField.frame);
 	[separator setFrame:((CGRect){{separator.frame.origin.x, tokenFieldBottom}, separator.bounds.size})];
-	[resultsTable setFrame:((CGRect){{resultsTable.frame.origin.x, (tokenFieldBottom + 1)}, resultsTable.bounds.size})];
-	[contentView setFrame:((CGRect){{contentView.frame.origin.x, (tokenFieldBottom + 1)}, contentView.bounds.size})];
+	[resultsTable setFrame:((CGRect){{resultsTable.frame.origin.x, (tokenFieldBottom + self.separatorHeight)}, resultsTable.bounds.size})];
+	[contentView setFrame:((CGRect){{contentView.frame.origin.x, (tokenFieldBottom + self.separatorHeight)}, contentView.bounds.size})];
 }
 
 - (void)tokenFieldFrameDidChange:(TITokenField *)field {
@@ -413,6 +444,8 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 
 - (void)setup {
 	
+	_visible = YES;
+	
 	[self setBorderStyle:UITextBorderStyleNone];
 	[self setFont:[UIFont systemFontOfSize:14]];
 	[self setBackgroundColor:[UIColor whiteColor]];
@@ -551,17 +584,6 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 }
 
 #pragma mark Token Handling
-
-- (TIToken *)addTokenWithTitle:(NSString *)title respresentedObject:(id)object {
-
-    if (title.length){
-        TIToken * token = [[TIToken alloc] initWithTitle:title representedObject:object font:self.font];
-        [self addToken:token];
-         return token;
-    }
-
-    return nil;
-}
 - (TIToken *)addTokenWithTitle:(NSString *)title {
 	return [self addTokenWithTitle:title representedObject:nil];
 }
@@ -586,7 +608,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	
 	if (shouldAdd){
 		
-		[self becomeFirstResponder];
+//		[self becomeFirstResponder];
 		
 		[token addTarget:self action:@selector(tokenTouchDown:) forControlEvents:UIControlEventTouchDown];
 		[token addTarget:self action:@selector(tokenTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
@@ -718,12 +740,26 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	return tokenCaret.y + lineHeight;
 }
 
+#pragma mark - 
+
+- (void)setVisible:(BOOL)visible animated:(BOOL)animated
+{
+	_visible = visible;
+	[self layoutTokensAnimated:animated];
+}
+
+- (void)setVisible:(BOOL)visible
+{
+	[self setVisible:visible animated:YES];
+}
+
 #pragma mark View Handlers
 - (void)layoutTokensAnimated:(BOOL)animated {
 	
-	CGFloat newHeight = [self layoutTokensInternal];
-	if (self.bounds.size.height != newHeight){
-		
+	CGFloat newHeight = self.visible ? [self layoutTokensInternal] : 0;
+	
+	if (self.bounds.size.height != newHeight)
+	{	
 		// Animating this seems to invoke the triple-tap-delete-key-loop-problem-thing™
 		[UIView animateWithDuration:(animated ? 0.3 : 0) animations:^{
 			[self setFrame:((CGRect){self.frame.origin, {self.bounds.size.width, newHeight}})];
@@ -808,8 +844,9 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 }
 
 - (CGRect)rightViewRectForBounds:(CGRect)bounds {
-	return ((CGRect){{bounds.size.width - self.rightView.bounds.size.width - 6,
-		bounds.size.height - self.rightView.bounds.size.height - 6}, self.rightView.bounds.size});
+	CGFloat padding = 6 + (self.font.pointSize - 14);
+	return ((CGRect){{bounds.size.width - self.rightView.bounds.size.width - padding,
+		bounds.size.height - self.rightView.bounds.size.height - padding}, self.rightView.bounds.size});
 }
 
 - (CGFloat)leftViewWidth {
@@ -909,7 +946,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	[tokenField tokenizeText];
 	
 	if ([delegate respondsToSelector:@selector(textFieldShouldReturn:)]){
-		[delegate textFieldShouldReturn:textField];
+		return [delegate textFieldShouldReturn:textField];
 	}
 	
 	return YES;

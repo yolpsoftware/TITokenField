@@ -74,6 +74,9 @@
 	UIPopoverController * popoverController;
 }
 
+@property (nonatomic) CGFloat separatorHeight;
+@property (nonatomic, retain) UIColor *separatorColor;
+
 @property (nonatomic, assign) BOOL showAlreadyTokenized;
 @property (nonatomic, readonly) TITokenField * tokenField;
 @property (nonatomic, readonly) UIView * separator;
@@ -81,6 +84,9 @@
 @property (nonatomic, readonly) UIView * contentView;
 @property (nonatomic, copy) NSArray * sourceArray;
 @property (nonatomic, readonly) NSArray * tokenTitles;
+
+// To show/hide the token fields
+@property (nonatomic) BOOL showTokenFields;
 
 - (void)updateContentSize;
 
@@ -123,6 +129,10 @@ typedef enum {
 @property (nonatomic, readonly) int numberOfLines;
 @property (nonatomic, retain) NSCharacterSet * tokenizingCharacters;
 @property (nonatomic, assign) NSString * promptText;
+
+@property (nonatomic) BOOL visible;
+
+- (void)setVisible:(BOOL)visible animated:(BOOL)animated;
 
 - (void)addToken:(TIToken *)title;
 - (TIToken *)addTokenWithTitle:(NSString *)title;
