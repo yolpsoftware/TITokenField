@@ -202,36 +202,23 @@
         static NSString *CellIdentifier = @"Cell";
         
         // any TokenCell
-        if (indexPath.row < self.tokenDataSource.numberOfTokenRows) {
-            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-            if (!cell) {
+        if (indexPath.row < self.tokenDataSource.numberOfTokenRows)
+		{
+
+            if (!cell)
+			{
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-                // get the token field from dictionary using the delegated title text as key
-                cell.backgroundColor = [UIColor lightGrayColor];
-            }
-            
-            
-            TITokenField *tokenField = _tokenFields[[self.tokenDataSource tokenFieldPromptAtRow:(NSUInteger) indexPath.row]];
-            
-            //tokenField.backgroundColor = [UIColor grayColor];
-            BOOL addSubview = YES;
-            for (UIView * subView in [cell.contentView subviews]) {
-                if(subView == tokenField) {
-                    addSubview = NO;
-                    break;
-                }
-                
-            }
-            
-            
-            if(addSubview) {
+
+				TITokenField *tokenField =
+				_tokenFields[[self.tokenDataSource tokenFieldPromptAtRow:(NSUInteger) indexPath.row]];
+
                 [cell.contentView addSubview:tokenField];
             }
             
-            
-            
-            
-        } else {
+        }
+		
+		else
+		{
             // another cell that is not a TIToken (e.g. subject, body)
             if ([self.tokenDataSource respondsToSelector:@selector(tokenTableView:cellForRowAtIndexPath:)]) {
                 

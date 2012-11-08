@@ -152,8 +152,6 @@
     static NSString *CellIdentifierSubject = @"SubjectCell";
     static NSString *CellIdentifierBody = @"BodyCell";
 
-
-    UIView *contentSubview = nil;
     // todo save the cells to keep their text active
     switch (indexPath.row) {
         case kOtherCellSubject:
@@ -163,19 +161,15 @@
                 if(!_textFieldSubject) {
                     //UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10, cell.frame.size.height / 2 - textView.font.lineHeight, tableView.tableView.bounds.size.width, 30)];
                     _textFieldSubject = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-                    _textFieldSubject.frame = CGRectMake(10, cell.frame.size.height / 2 - _textFieldSubject.font.lineHeight / 2, tableView.tableView.bounds.size.width, 30);
-
-
-                    //textField.backgroundColor = [UIColor lightGrayColor];
-
+					CGRect subjectFrame = CGRectMake(10, cell.frame.size.height / 2 - _textFieldSubject.font.lineHeight / 2, tableView.tableView.bounds.size.width, 30);
+                    _textFieldSubject.frame = CGRectIntegral(subjectFrame);
                     _textFieldSubject.placeholder = @"Subject";
 					_textFieldSubject.autoresizingMask = UIViewAutoresizingFlexibleWidth;
                 }
 
 				cell.selectionStyle = UITableViewCellSelectionStyleNone;
+				[cell.contentView addSubview:_textFieldSubject];
             }
-            //[cell.contentView addSubview:_textFieldSubject];
-            contentSubview = _textFieldSubject;
             break;
 
         case kOtherCellBody:
@@ -195,30 +189,12 @@
                 }
 
 				cell.selectionStyle = UITableViewCellSelectionStyleNone;
-				
+				[cell.contentView addSubview:_messageView];
             }
-            contentSubview = _messageView;
             break;
 
         default:
             break;
-    }
-
-    if(contentSubview && cell) {
-
-        BOOL addSubview = YES;
-        for (UIView * subView in [cell.contentView subviews]) {
-            if(subView == contentSubview) {
-                addSubview = NO;
-                break;
-            }
-
-        }
-
-        if(addSubview) {
-            [cell.contentView addSubview:contentSubview];
-        }
-
     }
 
     return cell;
