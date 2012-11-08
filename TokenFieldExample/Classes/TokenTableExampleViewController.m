@@ -13,17 +13,18 @@
 
 #define kOtherCellBodyHeight 300
 
-@implementation TokenTableExampleViewController {
+@interface TokenTableExampleViewController ()
+@property (nonatomic) BOOL showCompactFields;
+@end
 
-
-}
+@implementation TokenTableExampleViewController
 @synthesize tokenTableViewController = _tokenTableViewController;
-
 
 - (id)init {
     self = [super init];
     if (self) {
-        _tokenFieldTitles = @[@"To:", @"Cc:", @"Bcc:"];
+        _tokenFieldTitlesAll = @[@"To:", @"Cc:", @"Bcc:"];
+		_tokenFieldTitlesCompact = @[@"To:"];
         _oldHeight = kOtherCellBodyHeight;
     }
 
@@ -59,17 +60,51 @@
 
 - (void)toggleCCVisibility:(id)object
 {
-	
+	self.showCompactFields = !self.showCompactFields;
+}
+
+#pragma mark - Hiding of fields
+
+- (void)setShowCompactFields:(BOOL)showCompactFields
+{
+	if (_showCompactFields != showCompactFields)
+	{
+		_showCompactFields = showCompactFields;
+
+		NSIndexPath *CCRow =
+		[NSIndexPath indexPathForRow:1 inSection:0];
+		
+		NSIndexPath *BCCRow =
+		[NSIndexPath indexPathForRow:2 inSection:0];
+		
+		if (showCompactFields)
+		{
+			[self.tableView deleteRowsAtIndexPaths:@[CCRow, BCCRow]
+								  withRowAnimation:UITableViewRowAnimationAutomatic];
+		}
+		
+		else
+		{
+			[self.tableView insertRowsAtIndexPaths:@[CCRow, BCCRow]
+								  withRowAnimation:UITableViewRowAnimationAutomatic];
+		}
+	}
 }
 
 #pragma mark - TokenTableViewDataSource
 
 - (NSString *)tokenFieldPromptAtRow:(NSUInteger)row {
-    return _tokenFieldTitles[row];
+	if (self.showCompactFields)
+		return _tokenFieldTitlesCompact[row];
+	
+    return _tokenFieldTitlesAll[row];
 }
 
 - (NSUInteger)numberOfTokenRows {
-    return _tokenFieldTitles.count;
+	if (self.showCompactFields)
+		return _tokenFieldTitlesCompact.count;
+	
+    return _tokenFieldTitlesAll.count;
 }
 
 - (UIView *)accessoryViewForField:(TITokenField *)tokenField {

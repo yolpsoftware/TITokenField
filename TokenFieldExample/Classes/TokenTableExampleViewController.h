@@ -10,7 +10,8 @@
 @interface TokenTableExampleViewController : TITokenTableViewController <TITokenTableViewDataSource, TITokenTableViewControllerDelegate, UITextViewDelegate> {
 
 
-    NSArray *_tokenFieldTitles;
+    NSArray *_tokenFieldTitlesAll;
+    NSArray *_tokenFieldTitlesCompact;
     UITextView * _messageView;
     UITextField *_textFieldSubject;
 
