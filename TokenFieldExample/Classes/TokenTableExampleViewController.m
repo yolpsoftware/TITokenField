@@ -51,6 +51,12 @@
 
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+	[self _recalculateHeightOfTextView:_messageView];
+}
+
+
 #pragma mark - Bar buttons
 
 - (void)dismissKeyboard:(id)object
@@ -245,35 +251,29 @@
 
 
 
-- (void)textViewDidChange:(UITextView *)textView {
+- (void)textViewDidChange:(UITextView *)textView
+{
+	[self _recalculateHeightOfTextView:textView];
+}
 
-	//CGFloat oldHeight = tokenFieldView.frame.size.height - tokenFieldView.tokenField.frame.size.height;
+- (void)_recalculateHeightOfTextView:(UITextView *)textView
+{
 	CGFloat newHeight = textView.contentSize.height + textView.font.lineHeight;
-
-    if(newHeight < kOtherCellBodyHeight) {
+	
+    if (newHeight < kOtherCellBodyHeight) {
         newHeight = kOtherCellBodyHeight;
     }
-
+	
 	CGRect newTextFrame = textView.frame;
 	newTextFrame.size = textView.contentSize;
 	newTextFrame.size.height = newHeight;
-
-
-	if (newHeight < _oldHeight){
-		newTextFrame.size.height = _oldHeight;
-
-	}
-
+		
 	[textView setFrame:newTextFrame];
-
+	
     _oldHeight = newHeight;
-
-    [self.tokenTableViewController updateContentSize];
-
-
+	
+    [self updateContentSize];
 }
-
-
 
 
 @end
