@@ -48,6 +48,8 @@
 									target:self
 									action:@selector(toggleCCVisibility:)];
 	[self.navigationItem setLeftBarButtonItem:toggleCCVisibility];
+	
+	self.sourceArray = [Names listOfNames];
 
 }
 
