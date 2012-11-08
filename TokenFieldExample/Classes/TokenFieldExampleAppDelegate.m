@@ -17,19 +17,12 @@
 	
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-//	TokenFieldExampleViewController * viewController = [[TokenFieldExampleViewController alloc] init];
-//	UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-
-
-
     TokenTableExampleViewController * viewController = [[TokenTableExampleViewController alloc] init];
-
-
-    viewController.tokenDataSource = viewController;
+	viewController.tokenDataSource = viewController;
     viewController.delegate = viewController;
 
-	
-    [window setRootViewController:viewController];
+	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    [window setRootViewController:navigationController];
 
 	
     [window makeKeyAndVisible];

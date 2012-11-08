@@ -30,7 +30,37 @@
     return self;
 }
 
+- (void)viewDidLoad
+{
+	[super viewDidLoad];
+	//
+	UIBarButtonItem *dismissKeyboard =
+	[[UIBarButtonItem alloc] initWithTitle:@"Dismiss KB"
+									 style:UIBarButtonItemStylePlain
+									target:self
+									action:@selector(dismissKeyboard:)];
+	[self.navigationItem setRightBarButtonItem:dismissKeyboard];
+	
+	UIBarButtonItem *toggleCCVisibility =
+	[[UIBarButtonItem alloc] initWithTitle:@"Toggle CC"
+									 style:UIBarButtonItemStylePlain
+									target:self
+									action:@selector(toggleCCVisibility:)];
+	[self.navigationItem setLeftBarButtonItem:toggleCCVisibility];
 
+}
+
+#pragma mark - Bar buttons
+
+- (void)dismissKeyboard:(id)object
+{
+	[self.view endEditing:YES];
+}
+
+- (void)toggleCCVisibility:(id)object
+{
+	
+}
 
 #pragma mark - TokenTableViewDataSource
 
@@ -96,9 +126,10 @@
                     //textField.backgroundColor = [UIColor lightGrayColor];
 
                     _textFieldSubject.placeholder = @"Subject";
-
+					_textFieldSubject.autoresizingMask = UIViewAutoresizingFlexibleWidth;
                 }
 
+				cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             //[cell.contentView addSubview:_textFieldSubject];
             contentSubview = _textFieldSubject;
@@ -117,8 +148,11 @@
                    	[_messageView setFont:[UIFont systemFontOfSize:15]];
                    	[_messageView setText:@"Some message. The whole view resizes as you type, not just the text view."];
 
+					_messageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
                 }
 
+				cell.selectionStyle = UITableViewCellSelectionStyleNone;
+				
             }
             contentSubview = _messageView;
             break;

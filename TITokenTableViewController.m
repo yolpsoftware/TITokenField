@@ -7,8 +7,7 @@
 //
 
 #import "TITokenTableViewController.h"
-
-
+#import "Names.h"
 
 
 
@@ -59,6 +58,8 @@
         NSString *tokenPromptText = [self.tokenDataSource tokenFieldPromptAtRow:i];
         
         TITokenField *tokenField = [[TITokenField alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 42)];
+		tokenField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+		
         [tokenField addTarget:self action:@selector(tokenFieldDidBeginEditing:) forControlEvents:UIControlEventEditingDidBegin];
         [tokenField addTarget:self action:@selector(tokenFieldDidEndEditing:) forControlEvents:UIControlEventEditingDidEnd];
         [tokenField addTarget:self action:@selector(tokenFieldTextDidChange:) forControlEvents:UIControlEventEditingChanged];
@@ -88,8 +89,7 @@
     showAlreadyTokenized = NO;
     resultsArray = [[NSMutableArray alloc] init];
 
-    //todo
-    //[self setSourceArray:[Names listOfNames]];
+    [self setSourceArray:[Names listOfNames]];
     
     
     
