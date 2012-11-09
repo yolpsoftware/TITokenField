@@ -201,9 +201,6 @@
 
 }
 
-
-
-
 - (void)showContactsPicker:(id)sender {
 
 	// Show some kind of contacts picker in here.
@@ -211,12 +208,12 @@
 
 	NSArray * names = [Names listOfNames];
 
-	TIToken * token = [_currentSelectedTokenField addTokenWithTitle:[names objectAtIndex:(arc4random() % names.count)]];
+	TIToken * token = [self.currentSelectedTokenField addTokenWithTitle:[names objectAtIndex:(arc4random() % names.count)]];
 	[token setAccessoryType:TITokenAccessoryTypeDisclosureIndicator];
 	// If the size of the token might change, it's a good idea to layout again.
-	[_currentSelectedTokenField layoutTokensAnimated:YES];
+	[self.currentSelectedTokenField layoutTokensAnimated:YES];
 
-	NSUInteger tokenCount = _currentSelectedTokenField.tokens.count;
+	NSUInteger tokenCount = self.currentSelectedTokenField.tokens.count;
 	[token setTintColor:((tokenCount % 3) == 0 ? [TIToken redTintColor] : ((tokenCount % 2) == 0 ? [TIToken greenTintColor] : [TIToken blueTintColor]))];
 }
 
@@ -224,7 +221,7 @@
 #pragma mark - TokenTableViewControllerDelegate
 
 - (void)tokenTableViewController:(TITokenTableViewController *)tokenTableViewController didSelectTokenField:(TITokenField *)tokenField {
-    _currentSelectedTokenField = tokenField;
+    self.currentSelectedTokenField = tokenField;
 }
 
 
