@@ -220,12 +220,6 @@
 
 #pragma mark - TokenTableViewControllerDelegate
 
-- (void)tokenTableViewController:(TITokenTableViewController *)tokenTableViewController didSelectTokenField:(TITokenField *)tokenField {
-    self.currentSelectedTokenField = tokenField;
-}
-
-
-
 - (void)textViewDidChange:(UITextView *)textView
 {
 	[self _recalculateHeightOfTextView:textView];

@@ -63,8 +63,7 @@
 
 
 
-@interface TITokenTableViewController : UITableViewController <TITokenFieldDelegate> {
-
+@interface TITokenTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, TITokenFieldDelegate> {
     NSMutableArray *resultsArray;
     UITableView *resultsTable;
     UIPopoverController *popoverController;
@@ -73,6 +72,8 @@
     BOOL _searchResultIsVisible;
     CGPoint _contentOffsetBeforeResultTable;
 }
+
+@property (nonatomic, strong) UITableView *tableView;
 
 // Sets up the all the token fields
 @property (nonatomic, strong) NSCharacterSet *tokenizingCharacters;
