@@ -74,6 +74,10 @@
     CGPoint _contentOffsetBeforeResultTable;
 }
 
+// Sets up the all the token fields
+@property (nonatomic, strong) NSCharacterSet *tokenizingCharacters;
+@property (nonatomic, strong) UIFont *tokenFieldFont;
+
 @property (nonatomic, strong) NSMutableDictionary *tokenFields;
 @property (nonatomic, weak) TITokenField *currentSelectedTokenField;
 

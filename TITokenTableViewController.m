@@ -67,10 +67,14 @@
         [tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidBegin];
         [tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidEnd];
         
+		if (self.tokenizingCharacters)
+			[tokenField setTokenizingCharacters:self.tokenizingCharacters];
+		
+		if (self.tokenFieldFont)
+			[tokenField setFont:self.tokenFieldFont];
+		
         [tokenField setDelegate:self];
         [tokenField setPromptText:tokenPromptText];
-        
-        
         
         UIView *accessoryView = [self.tokenDataSource accessoryViewForField:tokenField];
         if(accessoryView) {
@@ -81,15 +85,11 @@
         
     }
     
-    
-
-    
     showAlreadyTokenized = NO;
     resultsArray = [[NSMutableArray alloc] init];
     
-    
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+	{
         
    		UITableViewController * tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
    		[tableViewController.tableView setDelegate:self];
@@ -114,12 +114,17 @@
    		popoverController = nil;
    	}
     
-    //self.tableView.allowsSelection = NO;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-   	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    
-    
+	NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
+
+    [notifCenter addObserver:self
+					selector:@selector(keyboardWillShow:)
+						name:UIKeyboardWillShowNotification
+					  object:nil];
+	
+   	[notifCenter addObserver:self
+					selector:@selector(keyboardWillHide:)
+						name:UIKeyboardWillHideNotification
+					  object:nil];
     
 }
 
@@ -128,6 +133,36 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Token field properties
+
+- (void)setTokenizingCharacters:(NSCharacterSet *)tokenizingCharacters
+{
+	if (_tokenizingCharacters != tokenizingCharacters)
+	{
+		_tokenizingCharacters = tokenizingCharacters;
+		
+		for (TITokenField *tokenField in self.tokenFields)
+		{
+			[tokenField setTokenizingCharacters:tokenizingCharacters];
+		}
+	}
+}
+
+- (void)setTokenFieldFont:(UIFont *)tokenFieldFont
+{
+	
+	if (_tokenFieldFont != tokenFieldFont)
+	{
+		_tokenFieldFont = tokenFieldFont;
+		
+		for (TITokenField *tokenField in self.tokenFields)
+		{
+			[tokenField setFont:tokenFieldFont];
+		}
+	}
+}
+
 
 #pragma mark - Table view data source
 
