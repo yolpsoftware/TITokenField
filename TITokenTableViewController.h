@@ -65,33 +65,24 @@
 
 @interface TITokenTableViewController : UITableViewController <TITokenFieldDelegate> {
 
-    NSMutableArray * resultsArray;
-    UITableView * resultsTable;
-    UIPopoverController * popoverController;
-
-    NSMutableDictionary * _tokenFields;
-
-
-    TITokenField *_currentSelectedTokenField;
-
+    NSMutableArray *resultsArray;
+    UITableView *resultsTable;
+    UIPopoverController *popoverController;
 
     CGFloat _keyboardHeight;
-
     BOOL _searchResultIsVisible;
-
     CGPoint _contentOffsetBeforeResultTable;
-
-
 }
 
+@property (nonatomic, strong) NSMutableDictionary *tokenFields;
+@property (nonatomic, weak) TITokenField *currentSelectedTokenField;
 
 @property (nonatomic, assign) BOOL showAlreadyTokenized;
-@property (nonatomic, copy) NSArray * sourceArray;
+@property (nonatomic, copy) NSArray *sourceArray;
 
 @property (nonatomic, weak) id<TITokenTableViewDataSource> tokenDataSource;
 @property (nonatomic, weak) id<TITokenTableViewControllerDelegate> delegate;
 
-
--(void) updateContentSize;
+- (void)updateContentSize;
 
 @end

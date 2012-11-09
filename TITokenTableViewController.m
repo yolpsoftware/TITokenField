@@ -47,7 +47,7 @@
 
 
 -(void) setup {
-    _tokenFields = [NSMutableDictionary dictionary];
+    self.tokenFields = [NSMutableDictionary dictionary];
     
     
     
@@ -77,7 +77,7 @@
             [tokenField setRightView:accessoryView];
         }
         
-        [_tokenFields setObject:tokenField forKey:tokenPromptText];
+        [self.tokenFields setObject:tokenField forKey:tokenPromptText];
         
     }
     
@@ -160,16 +160,19 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    //TITokenField *tokenField =  _tokenFields[[NSString stringWithFormat:@"%d", indexPath.row]];
     if (tableView == self.tableView) {
         
         
-        if(indexPath.row < self.tokenDataSource.numberOfTokenRows) {
-            //if (tokenField) {
-            TITokenField *tokenField = _tokenFields[[self.tokenDataSource tokenFieldPromptAtRow:(NSUInteger) indexPath.row]];
+        if (indexPath.row < self.tokenDataSource.numberOfTokenRows)
+		{
+			NSString *promptAtRow =
+			[self.tokenDataSource tokenFieldPromptAtRow:(NSUInteger)indexPath.row];
+            TITokenField *tokenField = self.tokenFields[promptAtRow];
             CGFloat height = tokenField.frame.size.height;
             return height;
-        } else {
+        }
+		else
+		{
             // a row that is not a token field: delegate
             if ([self.tokenDataSource respondsToSelector:@selector(tokenTableView:heightForRowAtIndexPath:)]) {
                 
@@ -209,9 +212,10 @@
 			{
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 
-				TITokenField *tokenField =
-				_tokenFields[[self.tokenDataSource tokenFieldPromptAtRow:(NSUInteger) indexPath.row]];
+				NSString *promptAtRow =
+				[self.tokenDataSource tokenFieldPromptAtRow:(NSUInteger)indexPath.row];
 
+				TITokenField *tokenField = self.tokenFields[promptAtRow];
                 [cell.contentView addSubview:tokenField];
             }
             
@@ -237,14 +241,19 @@
         
 
         //todo, shall the delegate be able to give a result cell ?
-        if ([_currentSelectedTokenField.delegate respondsToSelector:@selector(tokenField:resultsTableView:cellForRepresentedObject:)]) {
-            return [_currentSelectedTokenField.delegate tokenField:_currentSelectedTokenField resultsTableView:tableView cellForRepresentedObject:representedObject];
+        if ([self.currentSelectedTokenField.delegate respondsToSelector:@selector(tokenField:resultsTableView:cellForRepresentedObject:)])
+		{
+            return [self.currentSelectedTokenField.delegate tokenField:self.currentSelectedTokenField
+													  resultsTableView:tableView
+											  cellForRepresentedObject:representedObject];
         }
         
         static NSString *CellIdentifier = @"ResultsCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
-        NSString *subtitle = [self searchResultSubtitleForRepresentedObject:representedObject inTokenField:_currentSelectedTokenField];
+        NSString *subtitle =
+		[self searchResultSubtitleForRepresentedObject:representedObject
+										  inTokenField:self.currentSelectedTokenField];
         
         if (!cell) {
             
@@ -284,7 +293,7 @@
 
     if (tableView == resultsTable) {
         
-        TITokenField *tokenField = _currentSelectedTokenField;
+        TITokenField *tokenField = self.currentSelectedTokenField;
         if (tokenField) {
             id representedObject = [resultsArray objectAtIndex:(NSUInteger) indexPath.row];
             TIToken *token = [[TIToken alloc] initWithTitle:[self displayStringForRepresentedObject:representedObject] representedObject:representedObject];
@@ -307,7 +316,7 @@
         [self.delegate tokenTableViewController:self didSelectTokenField:field];
     }
     
-    _currentSelectedTokenField = field;
+    self.currentSelectedTokenField = field;
     
     UIView * cell = field.superview;
     while (cell && ![cell isKindOfClass:[UITableViewCell class]]) {
@@ -327,7 +336,7 @@
     
     [self setSearchResultsVisible:NO forTokenField:field];
     
-    _currentSelectedTokenField = nil;
+    self.currentSelectedTokenField = nil;
     
     if([self.delegate respondsToSelector:@selector(tokenTableViewController:didSelectTokenField:)]) {
         [self.delegate tokenTableViewController:self didSelectTokenField:field];
@@ -355,7 +364,7 @@
 #pragma mark Results Methods
 - (NSString *)displayStringForRepresentedObject:(id)object {
     
-    TITokenField *tokenField = _currentSelectedTokenField;
+    TITokenField *tokenField = self.currentSelectedTokenField;
     
 	if ([tokenField.delegate respondsToSelector:@selector(tokenField:displayStringForRepresentedObject:)]){
 		return [tokenField.delegate tokenField:tokenField displayStringForRepresentedObject:object];
@@ -369,7 +378,7 @@
 }
 
 - (NSString *)searchResultStringForRepresentedObject:(id)object   {
-    TITokenField *tokenField = _currentSelectedTokenField;
+    TITokenField *tokenField = self.currentSelectedTokenField;
     
 	if ([tokenField.delegate respondsToSelector:@selector(tokenField:searchResultStringForRepresentedObject:)]){
 		return [tokenField.delegate tokenField:tokenField searchResultStringForRepresentedObject:object];
@@ -464,7 +473,7 @@
 
 - (void)resultsForSearchString:(NSString *)searchString {
     
-    TITokenField *tokenField = _currentSelectedTokenField;
+    TITokenField *tokenField = self.currentSelectedTokenField;
 	// The brute force searching method.
 	// Takes the input string and compares it against everything in the source array.
 	// If the source is massive, this could take some time.
