@@ -774,11 +774,17 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 - (void)layoutTokensAnimated:(BOOL)animated {
 	
 	CGFloat newHeight = self.visible ? [self layoutTokensInternal] : 0;
+
+	// Don't animate if we're not the first responder. Weird animations of
+	// the text flying in
+	BOOL shouldAnimate = animated;
+	if (![self isFirstResponder])
+		shouldAnimate = NO;
 	
 	if (self.bounds.size.height != newHeight)
 	{	
 		// Animating this seems to invoke the triple-tap-delete-key-loop-problem-thing™
-		[UIView animateWithDuration:(animated ? 0.3 : 0) animations:^{
+		[UIView animateWithDuration:(shouldAnimate ? 0.3 : 0) animations:^{
 			[self setFrame:((CGRect){self.frame.origin, {self.bounds.size.width, newHeight}})];
 			[self sendActionsForControlEvents:TITokenFieldControlEventFrameWillChange];
 			
