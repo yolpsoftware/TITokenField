@@ -600,16 +600,19 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 }
 
 - (void)addToken:(TIToken *)token {
-	
+	// Untokenize the field if we're not the first responder
+	[self addToken:token untokenizeAfterAdding:![self isFirstResponder]];
+}
+
+- (void)addToken:(TIToken *)token untokenizeAfterAdding:(BOOL)untokenize
+{
 	BOOL shouldAdd = YES;
 	if ([delegate respondsToSelector:@selector(tokenField:willAddToken:)]){
 		shouldAdd = [delegate tokenField:self willAddToken:token];
 	}
 	
-	if (shouldAdd){
-		
-//		[self becomeFirstResponder];
-		
+	if (shouldAdd)
+	{	
 		[token addTarget:self action:@selector(tokenTouchDown:) forControlEvents:UIControlEventTouchDown];
 		[token addTarget:self action:@selector(tokenTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
 		[self addSubview:token];
@@ -623,6 +626,20 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 		[self setResultsModeEnabled:NO];
 		[self deselectSelectedToken];
 	}
+	
+	if (untokenize)
+		[self didEndEditing];
+}
+
+- (void)addTokens:(NSArray *)tokensArray
+{
+	for (TIToken *token in tokensArray)
+	{
+		[self addToken:token untokenizeAfterAdding:NO];
+	}
+	
+	if (![self isFirstResponder])
+		[self didEndEditing];
 }
 
 - (void)removeToken:(TIToken *)token {
