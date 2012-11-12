@@ -850,6 +850,16 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	[self layoutTokensAnimated:YES];
 }
 
+#pragma mark - Accessory view
+
+- (void)didTapOnAccessoryView:(id)view
+{
+	if ([self.delegate respondsToSelector:@selector(tokenField:didTapOnAccessoryButton:)])
+	{
+		[self.delegate tokenField:self didTapOnAccessoryButton:view];
+	}
+}
+
 #pragma mark Layout
 - (CGRect)textRectForBounds:(CGRect)bounds {
 	

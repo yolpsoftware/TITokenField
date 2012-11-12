@@ -39,6 +39,7 @@
 - (void)tokenField:(TITokenField *)tokenField didAddToken:(TIToken *)token;
 - (BOOL)tokenField:(TITokenField *)tokenField willRemoveToken:(TIToken *)token;
 - (void)tokenField:(TITokenField *)tokenField didRemoveToken:(TIToken *)token;
+- (void)tokenField:(TITokenField *)tokenField didTapOnAccessoryButton:(id)button;
 
 // Check if token is selected to determine whether to show more info about the token
 - (void)tokenField:(TITokenField *)tokenField didTouchUpOnToken:(TIToken *)token;
@@ -152,6 +153,10 @@ typedef enum {
 
 - (void)layoutTokensAnimated:(BOOL)animated;
 - (void)setResultsModeEnabled:(BOOL)enabled animated:(BOOL)animated;
+
+// When setting accessory view via TITokenTableVC, we hook up the tapping
+// action of the accessory view to its TokenField for a delegate callback
+- (void)didTapOnAccessoryView:(id)view;
 
 // Pass nil to hide label
 - (void)setPromptText:(NSString *)aText;

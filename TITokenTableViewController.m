@@ -75,8 +75,16 @@
         [tokenField setPromptText:tokenPromptText];
         
         UIView *accessoryView = [self.tokenDataSource accessoryViewForField:tokenField];
-        if(accessoryView) {
+        if (accessoryView) {
             [tokenField setRightView:accessoryView];
+			
+			// Hook up the didTapOnAccesoryView action
+			if ([accessoryView respondsToSelector:@selector(addTarget:action:forControlEvents:)])
+			{
+				[(id) accessoryView addTarget:tokenField
+									   action:@selector(didTapOnAccessoryView:)
+							 forControlEvents:UIControlEventTouchUpInside];
+			}
         }
         
         [self.tokenFields setObject:tokenField forKey:tokenPromptText];
@@ -309,8 +317,6 @@
     
     return cell;
 }
-
-
 
 #pragma mark - Table view delegate
 
