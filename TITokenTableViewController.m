@@ -109,6 +109,8 @@
    	else
    	{
    		resultsTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0 + 1, self.view.bounds.size.width, self.view.bounds.size.height)];
+		
+		resultsTable.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
    		[resultsTable setSeparatorColor:[UIColor colorWithWhite:0.85 alpha:1]];
    		[resultsTable setBackgroundColor:[UIColor colorWithRed:0.92 green:0.92 blue:0.92 alpha:1]];
@@ -483,15 +485,23 @@
 				// size is from the token till the beginning of the keyboard
 				resultsTable.frame = CGRectMake(0, tokenField.frame.size.height + 1, self.view.bounds.size.width, self.view.bounds.size.height - _keyboardHeight - tokenField.frame.size.height);
 			} completion:^(BOOL finished) {
-				[self.view bringSubviewToFront:resultsTable];
-				[resultsTable setHidden:!visible];
+				// Make it visible only if the the result table is still
+				// meant to be visible. For example the user might have
+				// continued typing more text that does not match anything
+				// and thus would have already hidden the table during the
+				// animation
+				if (_searchResultIsVisible)
+				{
+					[self.view bringSubviewToFront:resultsTable];
+					[resultsTable setHidden:NO];
+				}
 			}];
 	
         }
 		
 		else {
             // hiding result table, scroll back to where we were,
-            [self.tableView setContentOffset:_contentOffsetBeforeResultTable];
+			[self.tableView setContentOffset:_contentOffsetBeforeResultTable];
 			[resultsTable setHidden:!visible];
         }
         
