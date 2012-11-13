@@ -451,14 +451,6 @@
 	}
 	else
 	{
-        //CGPoint tableOrigin = [tokenField convertPoint:tokenField.frame.origin toView:self.view];
-        
-        //CGPoint newOrigin = [self.tableView convertPoint:self.tableView.bounds.origin toView:tokenField];
-        //CGRect newFrame = ((CGRect) {newOrigin, tokenField.frame.size});
-        
-        //CGFloat tokenFieldBottom = CGRectGetMaxY([tokenField convertRect:newFrame toView:self.view]);
-        
-        CGFloat tokenFieldBottom = CGRectGetMaxY([tokenField convertRect:tokenField.frame toView:self.view]);
         NSInteger scrollToRow = 0;
         
         if (visible) {
@@ -471,11 +463,6 @@
                     break;
                 }
             }
-            
-            // size is from the token till the beginning of the keyboard
-            resultsTable.frame = CGRectMake(0, tokenFieldBottom + 1, self.view.bounds.size.width, self.view.bounds.size.height - _keyboardHeight - tokenField.frame.size.height);
-            [self.view bringSubviewToFront:resultsTable];
-            
             
             _contentOffsetBeforeResultTable = self.tableView.contentOffset;
             
@@ -490,23 +477,27 @@
             }
             
             NSIndexPath * idx = [NSIndexPath indexPathForRow:scrollToRow inSection:0];
-            //[self.tableView scrollRectToVisible:newFrame animated:YES];
-            [self.tableView scrollToRowAtIndexPath:idx atScrollPosition:UITableViewScrollPositionTop animated:YES];
-        } else {
+
+			[UIView animateWithDuration:0.3 animations:^{
+				[self.tableView scrollToRowAtIndexPath:idx atScrollPosition:UITableViewScrollPositionTop animated:NO];
+				// size is from the token till the beginning of the keyboard
+				resultsTable.frame = CGRectMake(0, tokenField.frame.size.height + 1, self.view.bounds.size.width, self.view.bounds.size.height - _keyboardHeight - tokenField.frame.size.height);
+			} completion:^(BOOL finished) {
+				[self.view bringSubviewToFront:resultsTable];
+				[resultsTable setHidden:!visible];
+			}];
+	
+        }
+		
+		else {
             // hiding result table, scroll back to where we were,
             [self.tableView setContentOffset:_contentOffsetBeforeResultTable];
+			[resultsTable setHidden:!visible];
         }
         
-        
-        [resultsTable setHidden:!visible];
-        [tokenField setResultsModeEnabled:visible];
-        
-     
-        
+		[tokenField setResultsModeEnabled:visible];
         
         self.tableView.scrollEnabled = !visible;
-        
-        
     }
 }
 
