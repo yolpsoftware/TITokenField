@@ -142,6 +142,16 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+	if (_searchResultIsVisible)
+	{
+		CGRect resultsFrame = resultsTable.frame;
+		resultsFrame.size.height = self.view.frame.size.height - _keyboardHeight - resultsFrame.origin.y;
+		resultsTable.frame = resultsFrame;
+	}
+}
+
 #pragma mark - Token field properties
 
 - (void)setTokenizingCharacters:(NSCharacterSet *)tokenizingCharacters
