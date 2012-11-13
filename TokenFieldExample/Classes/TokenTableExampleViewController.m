@@ -4,6 +4,7 @@
 
 
 #import "TokenTableExampleViewController.h"
+#import "TITokenContact.h"
 #import "Names.h"
 
 #define kOtherCellSubject 0
@@ -18,7 +19,6 @@
 @end
 
 @implementation TokenTableExampleViewController
-@synthesize tokenTableViewController = _tokenTableViewController;
 
 - (id)init {
     self = [super init];
@@ -97,6 +97,32 @@
 								  withRowAnimation:UITableViewRowAnimationAutomatic];
 		}
 	}
+}
+
+#pragma mark - TITokenFieldDelegate
+
+- (NSString *)tokenField:(TITokenField *)tokenField displayStringForRepresentedObject:(id)object
+{
+	if ([object respondsToSelector:@selector(fullName)])
+		return [object fullName];
+	
+	return [object description];
+}
+
+- (NSString *)tokenField:(TITokenField *)tokenField searchResultStringForRepresentedObject:(id)object
+{
+	if ([object respondsToSelector:@selector(fullName)])
+		return [object fullName];
+	
+	return [object description];
+}
+
+- (NSString *)tokenField:(TITokenField *)tokenField searchResultSubtitleForRepresentedObject:(id)object
+{
+	if ([object respondsToSelector:@selector(email)])
+		return [object email];
+	
+	return [object description];	
 }
 
 #pragma mark - TokenTableViewDataSource
@@ -208,7 +234,11 @@
 
 	NSArray * names = [Names listOfNames];
 
-	TIToken * token = [self.currentSelectedTokenField addTokenWithTitle:[names objectAtIndex:(arc4random() % names.count)]];
+	TITokenContact *contact =
+	[names objectAtIndex:(arc4random() % names.count)];
+	
+	TIToken * token =
+	[self.currentSelectedTokenField addTokenWithTitle:contact.fullName representedObject:contact.email];
 	[token setAccessoryType:TITokenAccessoryTypeDisclosureIndicator];
 	// If the size of the token might change, it's a good idea to layout again.
 	[self.currentSelectedTokenField layoutTokensAnimated:YES];

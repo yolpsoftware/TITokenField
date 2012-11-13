@@ -20,6 +20,4 @@
 
 }
 
-@property(nonatomic, strong) TITokenTableViewController *tokenTableViewController;
-
 @end
