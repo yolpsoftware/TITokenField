@@ -537,8 +537,19 @@
         
 		NSString * query = [self searchResultStringForRepresentedObject:sourceObject];
         NSString * querySubtitle = [self searchResultSubtitleForRepresentedObject:sourceObject inTokenField:tokenField];
-		if ([query rangeOfString:searchString options:NSCaseInsensitiveSearch].location != NSNotFound || (querySubtitle && [querySubtitle rangeOfString:searchString options:NSCaseInsensitiveSearch].location != NSNotFound)){
-            
+		
+		BOOL hasQueryAndMatchesSearch =
+		(query != nil) &&
+		[query rangeOfString:searchString
+					 options:NSCaseInsensitiveSearch].location != NSNotFound;
+		
+		BOOL hasQuerySubtitleAndMatchesSearch =
+		(querySubtitle != nil) &&
+		[querySubtitle rangeOfString:searchString
+							 options:NSCaseInsensitiveSearch].location != NSNotFound;
+		
+		if (hasQueryAndMatchesSearch || hasQuerySubtitleAndMatchesSearch)
+		{
 			__block BOOL shouldAdd = ![resultsArray containsObject:sourceObject];
 			if (shouldAdd && !showAlreadyTokenized){
                 
