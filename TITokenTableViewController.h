@@ -75,6 +75,9 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 
+// Default: YES
+@property (nonatomic) BOOL tokenFieldsEditable;
+
 // Sets up the all the token fields
 @property (nonatomic, strong) NSCharacterSet *tokenizingCharacters;
 @property (nonatomic, strong) UIFont *tokenFieldFont;

@@ -22,7 +22,7 @@
 	
 	if (self)
 	{
-		
+		_tokenFieldsEditable = YES;
 	}
 	
 	return self;
@@ -71,6 +71,7 @@
 		if (self.tokenFieldFont)
 			[tokenField setFont:self.tokenFieldFont];
 		
+		[tokenField setEditable:self.tokenFieldsEditable];
         [tokenField setDelegate:self];
         [tokenField setPromptText:tokenPromptText];
         
