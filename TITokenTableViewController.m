@@ -72,6 +72,14 @@
 			[tokenField setFont:self.tokenFieldFont];
 		
 		[tokenField setEditable:self.tokenFieldsEditable];
+
+		// If tokens are not editable, make sure they are always shown in
+		// token form
+		if (!self.tokenFieldsEditable)
+		{
+			[tokenField setRemovesTokensOnEndEditing:NO];
+		}
+		
         [tokenField setDelegate:self];
         [tokenField setPromptText:tokenPromptText];
         
