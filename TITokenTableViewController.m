@@ -54,7 +54,7 @@
         NSString *tokenPromptText = [self.tokenDataSource tokenFieldPromptAtRow:i];
         
         TITokenField *tokenField = [[TITokenField alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 42)];
-		tokenField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//		tokenField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		
         [tokenField addTarget:self action:@selector(tokenFieldDidBeginEditing:) forControlEvents:UIControlEventEditingDidBegin];
         [tokenField addTarget:self action:@selector(tokenFieldDidEndEditing:) forControlEvents:UIControlEventEditingDidEnd];

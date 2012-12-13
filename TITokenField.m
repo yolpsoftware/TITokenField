@@ -737,6 +737,10 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	numberOfLines = 1;
 	tokenCaret = (CGPoint){leftMargin, (topMargin - 1)};
 	
+	NSUInteger totalNumTokens = [tokens count];
+	
+	DDLogInfo(@"self.bounds.size.width: %.2f / frame: %.2f / superview frame: %@", self.bounds.size.width, self.frame.size.width, NSStringFromCGRect(self.superview.bounds));
+	
 	[tokens enumerateObjectsUsingBlock:^(TIToken * token, NSUInteger idx, BOOL *stop){
 		
 		[token setFont:self.font];
@@ -744,7 +748,8 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 		
 		if (token.superview){
 			
-			if (tokenCaret.x + token.bounds.size.width + rightMargin > self.bounds.size.width){
+			if (tokenCaret.x + token.bounds.size.width + rightMargin > self.bounds.size.width)
+			{
 				numberOfLines++;
 				tokenCaret.x = (numberOfLines > 1 ? hPadding : leftMargin);
 				tokenCaret.y += lineHeight;
@@ -753,10 +758,31 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 			[token setFrame:(CGRect){tokenCaret, token.bounds.size}];
 			tokenCaret.x += token.bounds.size.width + 4;
 			
-			if (self.bounds.size.width - tokenCaret.x - rightMargin < 50){
-				numberOfLines++;
-				tokenCaret.x = (numberOfLines > 1 ? hPadding : leftMargin);
-				tokenCaret.y += lineHeight;
+			DDLogInfo(@"[%@] token (%@): %@ (tokenCaret.x: %.2f)", self.promptText, token.title, NSStringFromCGRect(token.frame), tokenCaret.x);
+			
+			// If not editable, and this is the last token, we don't need to
+			// increase the numberOfLines further else we'll end up with one
+			// empty line
+			BOOL lastTokenAndNotEditable = (!self.editable && idx == totalNumTokens - 1);
+			BOOL shouldAdvanceCaret = !lastTokenAndNotEditable;
+
+//			if (lastTokenAndNotEditable)
+//				DDLogInfo(@"token (%@) shouldn't increase numberOfLines", token.title);
+
+			if (/*shouldAdvanceCaret && */self.bounds.size.width - tokenCaret.x - rightMargin < 50)
+			{
+				if (lastTokenAndNotEditable)
+					DDLogInfo(@"[%@] token (%@) shouldn't increase numberOfLines", self.promptText, token.title);
+
+				DDLogInfo(@"[%@] self.bounds.size.width - tokenCaret.x - rightMargin (%.2f)", self.promptText, self.bounds.size.width - tokenCaret.x - rightMargin);
+				
+				if (shouldAdvanceCaret)
+				{
+					DDLogInfo(@"[%@] Advancing number of lines after token (%@)", self.promptText, token.title);
+					numberOfLines++;
+					tokenCaret.x = (numberOfLines > 1 ? hPadding : leftMargin);
+					tokenCaret.y += lineHeight;
+				}
 			}
 		}
 	}];
