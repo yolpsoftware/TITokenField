@@ -716,14 +716,14 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 }
 
 - (void)tokenTouchUpInside:(TIToken *)token {
-	if (!editable)
-		return;
-		
 	if ([delegate respondsToSelector:@selector(tokenField:didTouchUpOnToken:)]){
 		[delegate tokenField:self didTouchUpOnToken:token];
 	}	
 		
-	[self selectToken:token];
+	if (editable)
+	{
+		[self selectToken:token];
+	}
 }
 
 - (CGFloat)layoutTokensInternal {
