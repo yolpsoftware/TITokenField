@@ -94,6 +94,9 @@
 									   action:@selector(didTapOnAccessoryView:)
 							 forControlEvents:UIControlEventTouchUpInside];
 			}
+			
+			if (!self.tokenFieldsEditable)
+				[tokenField setRightViewMode:UITextFieldViewModeAlways];
         }
         
         [self.tokenFields setObject:tokenField forKey:tokenPromptText];

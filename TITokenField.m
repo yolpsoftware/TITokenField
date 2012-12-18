@@ -730,7 +730,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	
 	CGFloat topMargin = floor(self.font.lineHeight * 4 / 7);
 	CGFloat leftMargin = self.leftViewWidth + 12;
-	CGFloat hPadding = 8;
+	CGFloat hPadding = 12;
 	CGFloat rightMargin = self.rightViewWidth + hPadding;
 	CGFloat lineHeight = self.font.lineHeight + topMargin + 5;
 	
@@ -909,10 +909,35 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	return ((CGRect){{8, ceilf(self.font.lineHeight * 4 / 7)}, self.leftView.bounds.size});
 }
 
-- (CGRect)rightViewRectForBounds:(CGRect)bounds {
+- (CGRect)rightViewRectForBounds:(CGRect)bounds
+{
 	CGFloat padding = 6 + (self.font.pointSize - 14);
-	return ((CGRect){{bounds.size.width - self.rightView.bounds.size.width - padding,
-		bounds.size.height - self.rightView.bounds.size.height - padding}, self.rightView.bounds.size});
+
+	CGRect rect;
+	
+	// Editable accessory view, keep it to the bottom of the cell.
+	// Useful for add contact button
+	if (self.editable)
+	{
+		rect =
+		CGRectMake(bounds.size.width - self.rightView.bounds.size.width - padding,
+				   bounds.size.height - self.rightView.bounds.size.height - padding,
+				   self.rightView.bounds.size.width,
+				   self.rightView.bounds.size.height);
+	}
+
+	// Non-editable accessory view, keep it to aligned to the vertical center
+	// Useful for things like 'Hide' button
+	else
+	{
+		rect =
+		CGRectMake(bounds.size.width - self.rightView.bounds.size.width - padding,
+				   (bounds.size.height - self.rightView.bounds.size.height) / 2,
+				   self.rightView.bounds.size.width,
+				   self.rightView.bounds.size.height);
+	}
+	
+	return CGRectIntegral(rect);
 }
 
 - (CGFloat)leftViewWidth {
