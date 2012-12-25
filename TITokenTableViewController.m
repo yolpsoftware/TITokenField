@@ -395,15 +395,8 @@
 }
 
 - (void)tokenFieldDidEndEditing:(TITokenField *)field {
-	[self tokenFieldDidBeginEditing:field];
-    
     [self setSearchResultsVisible:NO forTokenField:field];
-    
     self.currentSelectedTokenField = nil;
-    
-    if([self.delegate respondsToSelector:@selector(tokenTableViewController:didSelectTokenField:)]) {
-        [self.delegate tokenTableViewController:self didSelectTokenField:field];
-    }
 }
 
 - (void)tokenFieldTextDidChange:(TITokenField *)field {
