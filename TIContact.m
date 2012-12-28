@@ -6,16 +6,16 @@
 //
 //
 
-#import "TITokenContact.h"
+#import "TIContact.h"
 
-@implementation TITokenContact
+@implementation TIContact
 
 + (id)contactWithName:(NSString *)name
 				email:(NSString *)email
 				label:(NSString *)label
 {
-	TITokenContact *contact =
-	[[TITokenContact alloc] initWithName:name email:email label:label];
+	TIContact *contact =
+	[[TIContact alloc] initWithName:name email:email label:label];
 	
 	return contact;
 }

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TITokenContact : NSObject
+@interface TIContact : NSObject
 
 // Full name of the contact
 @property (nonatomic, copy) NSString *fullName;
