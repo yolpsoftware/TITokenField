@@ -99,6 +99,14 @@
 				[tokenField setRightViewMode:UITextFieldViewModeAlways];
         }
         
+        if ([self.delegate respondsToSelector:
+			 @selector(tokenTableViewController:didFinishSettingUpTokenField:forRow:)])
+		{
+			[self.delegate tokenTableViewController:self
+					   didFinishSettingUpTokenField:tokenField
+											 forRow:i];
+		}
+		
         [self.tokenFields setObject:tokenField forKey:tokenPromptText];
         
     }
@@ -360,6 +368,11 @@
         if (tokenField) {
             id representedObject = [resultsArray objectAtIndex:(NSUInteger) indexPath.row];
             TIToken *token = [[TIToken alloc] initWithTitle:[self displayStringForRepresentedObject:representedObject] representedObject:representedObject];
+			
+			// Use the token field's tint color if any
+			if (tokenField.tintColor)
+				token.tintColor = tokenField.tintColor;
+			
             [tokenField addToken:token];
             
             [tableView deselectRowAtIndexPath:indexPath animated:YES];

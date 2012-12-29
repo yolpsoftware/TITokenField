@@ -59,6 +59,15 @@
 */
 - (void)tokenTableViewController:(TITokenTableViewController *)tableView didSelectRowAtIndex:(NSInteger)row;
 
+/**
+ * Called when a token field has been set up by the table view controller during
+ * initialisation. Useful to further customize the tokenfield further if needed,
+ * such as setting a tintColor for all tokens created, etc.
+ */
+- (void)tokenTableViewController:(TITokenTableViewController *)tableView
+	didFinishSettingUpTokenField:(TITokenField *)tokenField
+						  forRow:(NSUInteger)row;
+
 @end
 
 

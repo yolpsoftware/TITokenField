@@ -136,6 +136,9 @@ typedef enum {
 
 @property (nonatomic) BOOL visible;
 
+// Set the tintColor of all tokens added here
+@property (nonatomic, retain) UIColor *tintColor;
+
 - (void)setVisible:(BOOL)visible animated:(BOOL)animated;
 
 - (void)addToken:(TIToken *)title;

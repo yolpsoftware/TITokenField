@@ -592,6 +592,12 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	
 	if (title.length){
 		TIToken * token = [[TIToken alloc] initWithTitle:title representedObject:object font:self.font];
+		
+		// If we're requested to use a specific tintColor for tokens added
+		// to this field, use it
+		if (self.tintColor)
+			token.tintColor = self.tintColor;
+		
 		[self addToken:token];
 		return token;
 	}
