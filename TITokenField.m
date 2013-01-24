@@ -745,7 +745,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	
 	NSUInteger totalNumTokens = [tokens count];
 	
-	DDLogInfo(@"self.bounds.size.width: %.2f / frame: %.2f / superview frame: %@", self.bounds.size.width, self.frame.size.width, NSStringFromCGRect(self.superview.bounds));
+//	DDLogInfo(@"self.bounds.size.width: %.2f / frame: %.2f / superview frame: %@", self.bounds.size.width, self.frame.size.width, NSStringFromCGRect(self.superview.bounds));
 	
 	[tokens enumerateObjectsUsingBlock:^(TIToken * token, NSUInteger idx, BOOL *stop){
 		
