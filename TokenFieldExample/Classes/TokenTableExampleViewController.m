@@ -4,7 +4,7 @@
 
 
 #import "TokenTableExampleViewController.h"
-#import "TITokenContact.h"
+#import "TIContact.h"
 #import "Names.h"
 
 #define kOtherCellSubject 0
@@ -234,7 +234,7 @@
 
 	NSArray * names = [Names listOfNames];
 
-	TITokenContact *contact =
+	TIContact *contact =
 	[names objectAtIndex:(arc4random() % names.count)];
 	
 	TIToken * token =
