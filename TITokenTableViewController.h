@@ -65,8 +65,7 @@
  * such as setting a tintColor for all tokens created, etc.
  */
 - (void)tokenTableViewController:(TITokenTableViewController *)tableView
-	didFinishSettingUpTokenField:(TITokenField *)tokenField
-						  forRow:(NSUInteger)row;
+	didFinishSettingUpTokenField:(TITokenField *)tokenField;
 
 @end
 
@@ -91,7 +90,6 @@
 @property (nonatomic, strong) NSCharacterSet *tokenizingCharacters;
 @property (nonatomic, strong) UIFont *tokenFieldFont;
 
-@property (nonatomic, strong) NSMutableDictionary *tokenFields;
 @property (nonatomic, weak) TITokenField *currentSelectedTokenField;
 
 @property (nonatomic, assign) BOOL showAlreadyTokenized;
@@ -101,5 +99,8 @@
 @property (nonatomic, weak) id<TITokenTableViewControllerDelegate> delegate;
 
 - (void)updateContentSize;
+
+// Use this to obtain the token field for the prompt
+- (TITokenField *)tokenFieldForPrompt:(NSString *)prompt;
 
 @end

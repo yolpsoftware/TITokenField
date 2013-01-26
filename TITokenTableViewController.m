@@ -9,7 +9,7 @@
 #import "TITokenTableViewController.h"
 
 @interface TITokenTableViewController ()
-
+@property (nonatomic, strong) NSMutableDictionary *tokenFields;
 @end
 
 @implementation TITokenTableViewController
@@ -42,74 +42,6 @@
 	self.tableView.dataSource = self;
 	
 	[self.view insertSubview:self.tableView atIndex:0];
-    
-	[self setup];
-}
-
-
--(void) setup {
-    self.tokenFields = [NSMutableDictionary dictionary];
-    
-    for(NSUInteger i = 0; i < self.tokenDataSource.numberOfTokenRows; i++) {
-        NSString *tokenPromptText = [self.tokenDataSource tokenFieldPromptAtRow:i];
-        
-        TITokenField *tokenField = [[TITokenField alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 42)];
-//		tokenField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		
-        [tokenField addTarget:self action:@selector(tokenFieldDidBeginEditing:) forControlEvents:UIControlEventEditingDidBegin];
-        [tokenField addTarget:self action:@selector(tokenFieldDidEndEditing:) forControlEvents:UIControlEventEditingDidEnd];
-        [tokenField addTarget:self action:@selector(tokenFieldTextDidChange:) forControlEvents:UIControlEventEditingChanged];
-        [tokenField addTarget:self action:@selector(tokenFieldFrameWillChange:) forControlEvents:TITokenFieldControlEventFrameWillChange];
-        [tokenField addTarget:self action:@selector(tokenFieldFrameDidChange:) forControlEvents:TITokenFieldControlEventFrameDidChange];
-        
-        [tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidBegin];
-        [tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidEnd];
-        
-		if (self.tokenizingCharacters)
-			[tokenField setTokenizingCharacters:self.tokenizingCharacters];
-		
-		if (self.tokenFieldFont)
-			[tokenField setFont:self.tokenFieldFont];
-		
-		[tokenField setEditable:self.tokenFieldsEditable];
-
-		// If tokens are not editable, make sure they are always shown in
-		// token form
-		if (!self.tokenFieldsEditable)
-		{
-			[tokenField setRemovesTokensOnEndEditing:NO];
-		}
-		
-        [tokenField setDelegate:self];
-        [tokenField setPromptText:tokenPromptText];
-        
-        UIView *accessoryView = [self.tokenDataSource accessoryViewForField:tokenField];
-        if (accessoryView) {
-            [tokenField setRightView:accessoryView];
-			
-			// Hook up the didTapOnAccesoryView action
-			if ([accessoryView respondsToSelector:@selector(addTarget:action:forControlEvents:)])
-			{
-				[(id) accessoryView addTarget:tokenField
-									   action:@selector(didTapOnAccessoryView:)
-							 forControlEvents:UIControlEventTouchUpInside];
-			}
-			
-			if (!self.tokenFieldsEditable)
-				[tokenField setRightViewMode:UITextFieldViewModeAlways];
-        }
-        
-        if ([self.delegate respondsToSelector:
-			 @selector(tokenTableViewController:didFinishSettingUpTokenField:forRow:)])
-		{
-			[self.delegate tokenTableViewController:self
-					   didFinishSettingUpTokenField:tokenField
-											 forRow:i];
-		}
-		
-        [self.tokenFields setObject:tokenField forKey:tokenPromptText];
-        
-    }
     
     showAlreadyTokenized = NO;
     resultsArray = [[NSMutableArray alloc] init];
@@ -172,6 +104,86 @@
 	}
 }
 
+#pragma mark - Token field for prompt
+
+- (NSMutableDictionary *)tokenFields
+{
+	if (!_tokenFields)
+	{
+		_tokenFields =
+		[NSMutableDictionary dictionaryWithCapacity:self.tokenDataSource.numberOfTokenRows];
+	}
+	
+	return _tokenFields;
+}
+
+- (TITokenField *)tokenFieldForPrompt:(NSString *)prompt
+{
+	// Return existing token field if any
+	TITokenField *tokenField = self.tokenFields[prompt];
+	
+	if (tokenField)
+		return tokenField;
+	
+	// Else set it up and add it to self.tokenFields
+	tokenField = [[TITokenField alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 42)];
+		//		tokenField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+		
+	[tokenField addTarget:self action:@selector(tokenFieldDidBeginEditing:) forControlEvents:UIControlEventEditingDidBegin];
+	[tokenField addTarget:self action:@selector(tokenFieldDidEndEditing:) forControlEvents:UIControlEventEditingDidEnd];
+	[tokenField addTarget:self action:@selector(tokenFieldTextDidChange:) forControlEvents:UIControlEventEditingChanged];
+	[tokenField addTarget:self action:@selector(tokenFieldFrameWillChange:) forControlEvents:TITokenFieldControlEventFrameWillChange];
+	[tokenField addTarget:self action:@selector(tokenFieldFrameDidChange:) forControlEvents:TITokenFieldControlEventFrameDidChange];
+	
+	[tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidBegin];
+	[tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidEnd];
+    
+	if (self.tokenizingCharacters)
+		[tokenField setTokenizingCharacters:self.tokenizingCharacters];
+	
+	if (self.tokenFieldFont)
+		[tokenField setFont:self.tokenFieldFont];
+		
+	[tokenField setEditable:self.tokenFieldsEditable];
+		
+	// If tokens are not editable, make sure they are always shown in
+	// token form
+	if (!self.tokenFieldsEditable)
+	{
+		[tokenField setRemovesTokensOnEndEditing:NO];
+	}
+		
+	[tokenField setDelegate:self];
+	[tokenField setPromptText:prompt];
+    
+	UIView *accessoryView = [self.tokenDataSource accessoryViewForField:tokenField];
+	if (accessoryView) {
+		[tokenField setRightView:accessoryView];
+		
+		// Hook up the didTapOnAccesoryView action
+		if ([accessoryView respondsToSelector:@selector(addTarget:action:forControlEvents:)])
+		{
+			[(id) accessoryView addTarget:tokenField
+								   action:@selector(didTapOnAccessoryView:)
+						 forControlEvents:UIControlEventTouchUpInside];
+		}
+		
+		if (!self.tokenFieldsEditable)
+			[tokenField setRightViewMode:UITextFieldViewModeAlways];
+	}
+	
+	if ([self.delegate respondsToSelector:
+		 @selector(tokenTableViewController:didFinishSettingUpTokenField:)])
+	{
+		[self.delegate tokenTableViewController:self
+				   didFinishSettingUpTokenField:tokenField];
+	}
+	
+	[self.tokenFields setObject:tokenField forKey:prompt];
+
+	return tokenField;
+}
+
 #pragma mark - Token field properties
 
 - (void)setTokenizingCharacters:(NSCharacterSet *)tokenizingCharacters
@@ -180,6 +192,7 @@
 	{
 		_tokenizingCharacters = tokenizingCharacters;
 		
+		// Update existing token fields if any
 		for (TITokenField *tokenField in self.tokenFields)
 		{
 			[tokenField setTokenizingCharacters:tokenizingCharacters];
@@ -193,7 +206,8 @@
 	if (_tokenFieldFont != tokenFieldFont)
 	{
 		_tokenFieldFont = tokenFieldFont;
-		
+
+		// Update existing token fields if any
 		for (TITokenField *tokenField in self.tokenFields)
 		{
 			[tokenField setFont:tokenFieldFont];
@@ -230,7 +244,6 @@
     
 }
 
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (tableView == self.tableView) {
@@ -240,7 +253,7 @@
 		{
 			NSString *promptAtRow =
 			[self.tokenDataSource tokenFieldPromptAtRow:(NSUInteger)indexPath.row];
-            TITokenField *tokenField = self.tokenFields[promptAtRow];
+            TITokenField *tokenField = [self tokenFieldForPrompt:promptAtRow];
             CGFloat height = tokenField.frame.size.height;
             return height;
         }
@@ -288,7 +301,7 @@
 				NSString *promptAtRow =
 				[self.tokenDataSource tokenFieldPromptAtRow:(NSUInteger)indexPath.row];
 
-				TITokenField *tokenField = self.tokenFields[promptAtRow];
+				TITokenField *tokenField = [self tokenFieldForPrompt:promptAtRow];
                 [cell.contentView addSubview:tokenField];
             }
             
@@ -382,9 +395,7 @@
     
 }
 
-#pragma mark TextField Methods
-
-#pragma mark TextField Methods
+#pragma mark - TextField Methods
 
 - (void)tokenFieldDidBeginEditing:(TITokenField *)field {
     
@@ -398,10 +409,6 @@
     while (cell && ![cell isKindOfClass:[UITableViewCell class]]) {
         cell = cell.superview;
     }
-    
-    
-    
-    
     
 	[resultsArray removeAllObjects];
 	[resultsTable reloadData];
@@ -430,7 +437,7 @@
     //	[self updateContentSize];
 }
 
-#pragma mark Results Methods
+#pragma mark - Results Methods
 - (NSString *)displayStringForRepresentedObject:(id)object {
     
     TITokenField *tokenField = self.currentSelectedTokenField;
