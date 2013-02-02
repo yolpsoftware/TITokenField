@@ -515,21 +515,22 @@
             }
             
             _contentOffsetBeforeResultTable = self.tableView.contentOffset;
-            
+			
             // find the containing cell to bring it to front
             UIView *cell = tokenField.superview;
             while (cell && ![cell isKindOfClass:[UITableViewCell class]]) {
                 cell = cell.superview;
             }
             
-            if (cell) {
-                [self.tableView bringSubviewToFront:cell];
-            }
-            
+//            if (cell) {
+//                [self.tableView bringSubviewToFront:cell];
+//            }
+			         
             NSIndexPath * idx = [NSIndexPath indexPathForRow:scrollToRow inSection:0];
+			CGRect rowRect = [self.tableView rectForRowAtIndexPath:idx];
 
 			[UIView animateWithDuration:0.3 animations:^{
-				[self.tableView scrollToRowAtIndexPath:idx atScrollPosition:UITableViewScrollPositionTop animated:NO];
+				[self.tableView setContentOffset:rowRect.origin animated:NO];
 				// size is from the token till the beginning of the keyboard
 				resultsTable.frame = CGRectMake(0, tokenField.frame.size.height + 1, self.view.bounds.size.width, self.view.bounds.size.height - _keyboardHeight - tokenField.frame.size.height);
 			} completion:^(BOOL finished) {
