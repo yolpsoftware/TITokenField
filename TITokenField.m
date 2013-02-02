@@ -764,7 +764,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 			[token setFrame:(CGRect){tokenCaret, token.bounds.size}];
 			tokenCaret.x += token.bounds.size.width + 4;
 			
-			NSLog(@"[%@] token (%@): %@ (tokenCaret.x: %.2f)", self.promptText, token.title, NSStringFromCGRect(token.frame), tokenCaret.x);
+//			NSLog(@"[%@] token (%@): %@ (tokenCaret.x: %.2f)", self.promptText, token.title, NSStringFromCGRect(token.frame), tokenCaret.x);
 			
 			// If not editable, and this is the last token, we don't need to
 			// increase the numberOfLines further else we'll end up with one
@@ -777,14 +777,14 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 
 			if (/*shouldAdvanceCaret && */self.bounds.size.width - tokenCaret.x - rightMargin < 50)
 			{
-				if (lastTokenAndNotEditable)
-					NSLog(@"[%@] token (%@) shouldn't increase numberOfLines", self.promptText, token.title);
+//				if (lastTokenAndNotEditable)
+//					NSLog(@"[%@] token (%@) shouldn't increase numberOfLines", self.promptText, token.title);
 
-				NSLog(@"[%@] self.bounds.size.width - tokenCaret.x - rightMargin (%.2f)", self.promptText, self.bounds.size.width - tokenCaret.x - rightMargin);
+//				NSLog(@"[%@] self.bounds.size.width - tokenCaret.x - rightMargin (%.2f)", self.promptText, self.bounds.size.width - tokenCaret.x - rightMargin);
 				
 				if (shouldAdvanceCaret)
 				{
-					NSLog(@"[%@] Advancing number of lines after token (%@)", self.promptText, token.title);
+//					NSLog(@"[%@] Advancing number of lines after token (%@)", self.promptText, token.title);
 					numberOfLines++;
 					tokenCaret.x = (numberOfLines > 1 ? hPadding : leftMargin);
 					tokenCaret.y += lineHeight;
