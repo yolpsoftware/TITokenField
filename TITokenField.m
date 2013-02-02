@@ -445,6 +445,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 - (void)setup {
 	
 	_visible = YES;
+	_animationsEnabled = YES;
 	
 	[self setBorderStyle:UITextBorderStyleNone];
 	[self setFont:[UIFont systemFontOfSize:14]];
@@ -820,6 +821,10 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	if (![self isFirstResponder])
 		shouldAnimate = NO;
 	
+	// If animations are disabled for this field
+	if (!self.animationsEnabled)
+		shouldAnimate = NO;
+	
 	if (self.bounds.size.height != newHeight)
 	{	
 		// Animating this seems to invoke the triple-tap-delete-key-loop-problem-thing™
@@ -828,7 +833,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 			[self sendActionsForControlEvents:TITokenFieldControlEventFrameWillChange];
 			
 		} completion:^(BOOL complete){
-			if (complete) [self sendActionsForControlEvents:TITokenFieldControlEventFrameDidChange];
+			[self sendActionsForControlEvents:TITokenFieldControlEventFrameDidChange];
 		}];
 	}
 }

@@ -52,7 +52,10 @@
 /**
 * Called when a token field is selected
 */
--(void) tokenTableViewController:(TITokenTableViewController *) tokenTableViewController  didSelectTokenField:(TITokenField*) tokenField;
+-(void)tokenTableViewController:(TITokenTableViewController *)tokenTableViewController didSelectTokenField:(TITokenField*)tokenField;
+
+-(void)tokenTableViewController:(TITokenTableViewController *)tokenTableViewController tokenFieldFrameWillChange:(TITokenField*)tokenField;
+-(void)tokenTableViewController:(TITokenTableViewController *)tokenTableViewController tokenFieldFrameDidChange:(TITokenField*)tokenField;
 
 /**
 * Called when a cell that is NOT a TIToken cell is selected

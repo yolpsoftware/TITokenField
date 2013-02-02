@@ -139,6 +139,9 @@ typedef enum {
 // Set the tintColor of all tokens added here
 @property (nonatomic, retain) UIColor *tintColor;
 
+// Set to NO to disable animations in - (void)layoutTokensAnimated
+@property (nonatomic) BOOL animationsEnabled;
+
 - (void)setVisible:(BOOL)visible animated:(BOOL)animated;
 
 - (void)addToken:(TIToken *)title;

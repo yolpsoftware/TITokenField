@@ -431,7 +431,10 @@
 
 - (void)tokenFieldFrameWillChange:(TITokenField *)field {
     //NSLog(@"%s %@", __PRETTY_FUNCTION__, field);
-    
+    if ([self.delegate respondsToSelector:@selector(tokenTableViewController:tokenFieldFrameWillChange:)]) {
+        [self.delegate tokenTableViewController:self tokenFieldFrameWillChange:field];
+    }
+	
     // this resizes the table cells animated
     [self updateContentSize];
 
@@ -441,6 +444,10 @@
     //NSLog(@"%s %@", __PRETTY_FUNCTION__, field);
     //[self.tableView endUpdates];
     //	[self updateContentSize];
+	
+    if ([self.delegate respondsToSelector:@selector(tokenTableViewController:tokenFieldFrameDidChange:)]) {
+        [self.delegate tokenTableViewController:self tokenFieldFrameDidChange:field];
+    }
 }
 
 #pragma mark - Results Methods
