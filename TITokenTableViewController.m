@@ -128,7 +128,12 @@
 	// Else set it up and add it to self.tokenFields
 	tokenField = [[TITokenField alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 42)];
 		//		tokenField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		
+	
+	// Hook it up to the dictionary immediately so that in the event this
+	// method calls for the same token field again we won't recreate another one
+	[self.tokenFields setObject:tokenField forKey:prompt];
+	
+	// Hook up the target-action pair
 	[tokenField addTarget:self action:@selector(tokenFieldDidBeginEditing:) forControlEvents:UIControlEventEditingDidBegin];
 	[tokenField addTarget:self action:@selector(tokenFieldDidEndEditing:) forControlEvents:UIControlEventEditingDidEnd];
 	[tokenField addTarget:self action:@selector(tokenFieldTextDidChange:) forControlEvents:UIControlEventEditingChanged];
@@ -137,7 +142,9 @@
 	
 	[tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidBegin];
 	[tokenField addTarget:self action:@selector(tokenFieldChangedEditing:) forControlEvents:UIControlEventEditingDidEnd];
-    
+	
+
+	//
 	if (self.tokenizingCharacters)
 		[tokenField setTokenizingCharacters:self.tokenizingCharacters];
 	
@@ -171,6 +178,7 @@
 		if (!self.tokenFieldsEditable)
 			[tokenField setRightViewMode:UITextFieldViewModeAlways];
 	}
+		
 	
 	if ([self.delegate respondsToSelector:
 		 @selector(tokenTableViewController:didFinishSettingUpTokenField:)])
@@ -178,8 +186,6 @@
 		[self.delegate tokenTableViewController:self
 				   didFinishSettingUpTokenField:tokenField];
 	}
-	
-	[self.tokenFields setObject:tokenField forKey:prompt];
 
 	return tokenField;
 }
