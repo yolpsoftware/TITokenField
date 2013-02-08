@@ -308,7 +308,19 @@
 				[self.tokenDataSource tokenFieldPromptAtRow:(NSUInteger)indexPath.row];
 
 				TITokenField *tokenField = [self tokenFieldForPrompt:promptAtRow];
+				BOOL shouldRemakeTokenFieldFirstResponder =
+				(tokenField == self.currentSelectedTokenField);
+				
+				// This resigns first responder for the tokenField if it is
+				// already the token field, leaving nothing as first responder
                 [cell.contentView addSubview:tokenField];
+				
+				// This fixes the bug where we could end up with no first
+				// responder when the table is somehow reloaded or remade
+				if (shouldRemakeTokenFieldFirstResponder)
+				{
+					[tokenField becomeFirstResponder];
+				}
             }
             
         }
