@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+// If no label is provided, use this
+#define TICONTACT_DEFAULT_LABEL		@"other"
+
 @interface TIContact : NSObject
 
 // Full name of the contact

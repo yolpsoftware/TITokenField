@@ -36,6 +36,9 @@
 		_fullName = [name copy];
 		_email = [email copy];
 		_label = [label copy];
+		
+		if (!label)
+			_label = [TICONTACT_DEFAULT_LABEL copy];
 	}
 	
 	return self;
