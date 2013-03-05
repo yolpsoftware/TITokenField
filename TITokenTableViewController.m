@@ -8,6 +8,26 @@
 
 #import "TITokenTableViewController.h"
 
+#pragma mark - TITokenTableView
+
+@implementation TITokenTableView
+@dynamic delegate;
+
+- (void)reloadData
+{
+	self.reloading = YES;
+	[super reloadData];
+	self.reloading = NO;
+	
+	if ([self.delegate respondsToSelector:@selector(tableViewDidFinishReloading:)])
+	{
+		[self.delegate tableViewDidFinishReloading:self];
+	}
+}
+@end
+
+#pragma mark - TITokenTableViewController
+
 @interface TITokenTableViewController ()
 @property (nonatomic, strong) NSMutableDictionary *tokenFields;
 @end
@@ -32,8 +52,9 @@
 {
     [super viewDidLoad];
  
-	self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds
-												  style:UITableViewStylePlain];
+	self.tableView =
+	[[TITokenTableView alloc] initWithFrame:self.view.bounds
+									  style:UITableViewStylePlain];
 	
 	self.tableView.autoresizingMask =
 	UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

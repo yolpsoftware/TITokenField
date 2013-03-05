@@ -73,8 +73,22 @@
 @end
 
 
+#pragma mark - TITokenTableView
 
-@interface TITokenTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, TITokenFieldDelegate> {
+@protocol TITokenTableViewDelegate <UITableViewDelegate>
+@optional
+- (void)tableViewDidFinishReloading:(UITableView *)tableView;
+@end
+
+@interface TITokenTableView : UITableView
+@property (nonatomic, assign) id<TITokenTableViewDelegate> delegate;
+@property (nonatomic, getter = isReloading) BOOL reloading;
+@end
+
+
+#pragma mark - TITokenTableViewController
+
+@interface TITokenTableViewController : UIViewController <UITableViewDataSource, TITokenTableViewDelegate, TITokenFieldDelegate> {
     NSMutableArray *resultsArray;
     UITableView *resultsTable;
     UIPopoverController *popoverController;
@@ -84,7 +98,7 @@
     CGPoint _contentOffsetBeforeResultTable;
 }
 
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) TITokenTableView *tableView;
 
 // Default: YES
 @property (nonatomic) BOOL tokenFieldsEditable;
