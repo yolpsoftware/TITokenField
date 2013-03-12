@@ -35,10 +35,7 @@
 	{
 		_fullName = [name copy];
 		_email = [email copy];
-		_emailLabel = [label copy];
-		
-		if (!label)
-			_emailLabel = [TICONTACT_DEFAULT_LABEL copy];
+		_emailLabel = [label copy];		
 	}
 	
 	return self;
@@ -48,6 +45,28 @@
 {
 	return [NSString stringWithFormat:@"TITokenContact: %@ (email: %@, %@ / phone: %@, %@)",
 			self.fullName, self.email, self.emailLabel, self.phone, self.phoneLabel];
+}
+
+#pragma mark - 
+
+- (NSString *)phoneLabel
+{
+	if (!_phoneLabel)
+	{
+		_phoneLabel = [TICONTACT_DEFAULT_LABEL copy];
+	}
+	
+	return _phoneLabel;
+}
+
+- (NSString *)emailLabel
+{
+	if (!_emailLabel)
+	{
+		_emailLabel = [TICONTACT_DEFAULT_LABEL copy];
+	}
+	
+	return _emailLabel;
 }
 
 @end
