@@ -20,7 +20,13 @@
 @property (nonatomic, copy) NSString *email;
 
 // Label describing the type of email address.
-@property (nonatomic, copy) NSString *label;
+@property (nonatomic, copy) NSString *emailLabel;
+
+// Phone number associated with contact
+@property (nonatomic, copy) NSString *phone;
+
+// Label describing the type of phone number
+@property (nonatomic, copy) NSString *phoneLabel;
 
 + (id)contactWithName:(NSString *)name
 				email:(NSString *)email
