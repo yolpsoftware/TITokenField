@@ -569,12 +569,31 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	if (self.text.length == 0) [self setText:kTextEmpty];
 }
 
-- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender
+{
+	BOOL isActuallyEmpty = [self.text isEqualToString:kTextEmpty];
+	BOOL hasSelection = !self.selectedTextRange.isEmpty;
 	
-	// Stop the cut, copy, select and selectAll appearing when the field is 'empty'.
-	if (action == @selector(cut:) || action == @selector(copy:) || action == @selector(select:) || action == @selector(selectAll:))
-		return ![self.text isEqualToString:kTextEmpty];
+	if (action == @selector(cut:))
+	{
+		return !isActuallyEmpty && hasSelection;
+	}
 	
+	else if (action == @selector(copy:))
+	{
+		return !isActuallyEmpty && hasSelection;
+	}
+	
+	else if (action == @selector(select:))
+	{
+		return !isActuallyEmpty && !hasSelection;
+	}
+	
+	else if (action == @selector(selectAll:))
+	{
+		return !isActuallyEmpty && !hasSelection;
+	}
+		
 	return [super canPerformAction:action withSender:sender];
 }
 
