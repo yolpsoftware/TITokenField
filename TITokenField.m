@@ -752,14 +752,17 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	}
 }
 
+- (CGFloat)fontLineHeight {
+    return 18.0f; // self.font.lineHeight
+}
+
 - (CGFloat)layoutTokensInternal {
 	
-	CGFloat topMargin = floor(self.font.lineHeight * 4 / 7);
+	CGFloat topMargin = floor([self fontLineHeight] * 4 / 7);
 	CGFloat leftMargin = self.leftViewWidth + 12;
 	CGFloat hPadding = 12;
 	CGFloat rightMargin = self.rightViewWidth + hPadding;
-	CGFloat lineHeight = self.font.lineHeight + topMargin + 5;
-	
+	CGFloat lineHeight = [self fontLineHeight] + topMargin + 5;
 	numberOfLines = 1;
 	tokenCaret = (CGPoint){leftMargin, (topMargin - 1)};
 	
@@ -874,7 +877,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 		[scrollView setScrollsToTop:!flag];
 		[scrollView setScrollEnabled:!flag];
 		
-		CGFloat offset = ((numberOfLines == 1 || !flag) ? 0 : tokenCaret.y - floor(self.font.lineHeight * 4 / 7) + 1);
+		CGFloat offset = ((numberOfLines == 1 || !flag) ? 0 : tokenCaret.y - floor([self fontLineHeight] * 4 / 7) + 1);
 		[scrollView setContentOffset:CGPointMake(0, self.frame.origin.y + offset) animated:animated];
 	}
 	
@@ -918,12 +921,13 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 
 #pragma mark Layout
 - (CGRect)textRectForBounds:(CGRect)bounds {
-	
+
 	if ([self.text isEqualToString:kTextHidden]) return CGRectMake(0, -20, 0, 0);
 	
 	CGRect frame = CGRectOffset(bounds, tokenCaret.x + 2, tokenCaret.y + 3);
 	frame.size.width -= (tokenCaret.x + self.rightViewWidth + 10);
-	
+    // temporary fix
+    frame.origin.y -= (10 + self.numberOfLines)*self.numberOfLines;
 	return frame;
 }
 
@@ -936,7 +940,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 }
 
 - (CGRect)leftViewRectForBounds:(CGRect)bounds {
-	return ((CGRect){{8, ceilf(self.font.lineHeight * 4 / 7)}, self.leftView.bounds.size});
+	return ((CGRect){{8, ceilf([self fontLineHeight] * 4 / 7)}, self.leftView.bounds.size});
 }
 
 - (CGRect)rightViewRectForBounds:(CGRect)bounds
@@ -945,6 +949,9 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 
 	CGRect rect;
 	
+    CGRect rightViewBounds = CGRectMake(0, 0, 29.0f, 29.0f);
+    self.rightView.bounds = rightViewBounds;
+    
 	// Editable accessory view, keep it to the bottom of the cell.
 	// Useful for add contact button
 	if (self.editable)
