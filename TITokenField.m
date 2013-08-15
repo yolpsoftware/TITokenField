@@ -23,6 +23,11 @@
 - (void)setSearchResultsVisible:(BOOL)visible;
 - (void)resultsForSubstring:(NSString *)substring;
 - (void)presentpopoverAtTokenFieldCaretAnimated:(BOOL)animated;
+- (void)createTable:(UITableViewStyle)style;
+//- (void)showFooter:(NSString *)footerText;
+//- (void)hideFooter;
+- (void)showNoAuthWarningSign;
+- (void)loadFromAddressBook:(BOOL)sms;
 @end
 
 @implementation TITokenFieldView
@@ -33,6 +38,7 @@
 @synthesize contentView;
 @synthesize separator;
 @synthesize sourceArray;
+@synthesize footer;
 
 #pragma mark Init
 - (id)initWithFrame:(CGRect)frame {
@@ -98,10 +104,34 @@
 	[contentView setBackgroundColor:[UIColor clearColor]];
 	[self addSubview:contentView];
 	[contentView release];
+    
+    //[self createTable:UITableViewStylePlain tokenFieldBottom:tokenFieldBottom]; table is created later in the loadFromAddressBook or showNoAuthWarningSign methods
 	
+	[self bringSubviewToFront:separator];
+	[self bringSubviewToFront:tokenField];
+	[self updateContentSize];
+    
+    [self createTable:UITableViewStylePlain];
+    ABAddressBookRef addressBook = ABAddressBookCreate();
+    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
+        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+            if (granted)
+                [self loadFromAddressBook:sms];
+            else
+                [self showNoAuthWarningSign];
+        });
+    } else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+        [self loadFromAddressBook:sms];
+    } else {
+        [self showNoAuthWarningSign];
+    }
+}
+
+- (void)createTable:(UITableViewStyle)style {
+	CGFloat tokenFieldBottom = CGRectGetMaxY(tokenField.frame);
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
 		
-		UITableViewController * tableViewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
+		UITableViewController * tableViewController = [[UITableViewController alloc] initWithStyle:style];
 		[tableViewController.tableView setDelegate:self];
 		[tableViewController.tableView setDataSource:self];
 		[tableViewController setContentSizeForViewInPopover:CGSizeMake(400, 400)];
@@ -113,7 +143,7 @@
 	}
 	else
 	{
-		resultsTable = [[UITableView alloc] initWithFrame:CGRectMake(0, tokenFieldBottom + 1, self.bounds.size.width, 10)];
+		resultsTable = [[UITableView alloc] initWithFrame:CGRectMake(0, tokenFieldBottom + 1, self.bounds.size.width, 10) style:style];
 		[resultsTable setSeparatorColor:[UIColor colorWithWhite:0.85 alpha:1]];
 		[resultsTable setBackgroundColor:[UIColor colorWithRed:0.92 green:0.92 blue:0.92 alpha:1]];
 		[resultsTable setDelegate:self];
@@ -124,13 +154,33 @@
 		
 		popoverController = nil;
 	}
-	
-	[self bringSubviewToFront:separator];
-	[self bringSubviewToFront:tokenField];
-	[self updateContentSize];
-    
+}
+
+//- (void)showFooter:(NSString *)footerText {
+//    self.footer = footerText;
+//    if (self.resultsTable == nil || self.resultsTable.style == UITableViewStylePlain) {
+//        [UIView beginAnimations:@"style" context:nil];
+//        [self createTable:UITableViewStyleGrouped];
+//        [UIView commitAnimations];
+//    }
+//}
+
+//- (void)hideFooter {
+//    self.footer = nil;
+//    if (self.resultsTable == nil || self.resultsTable.style == UITableViewStyleGrouped) {
+//        [UIView beginAnimations:@"style" context:nil];
+//        [self createTable:UITableViewStylePlain];
+//        [UIView commitAnimations];
+//    }
+//}
+
+- (void)showNoAuthWarningSign {
+    //[self showFooter:[[NSBundle mainBundle] localizedStringForKey:@"You have denied n8message access to your contacts." value:nil table:nil]];
+}
+
+- (void)loadFromAddressBook:(BOOL)sms {
+//    [self hideFooter];
     ABAddressBookRef addressBook = ABAddressBookCreate();
-    
     CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
     CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);
     
@@ -272,14 +322,23 @@
 	return 44;
 }
 
+//- (int)numberOfSectionsInTableView:(UITableView *)tableView {
+//    return 1;
+//}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	
 	if ([tokenField.delegate respondsToSelector:@selector(tokenField:didFinishSearch:)]){
 		[tokenField.delegate tokenField:tokenField didFinishSearch:resultsArray];
 	}
-	
+
 	return resultsArray.count;
 }
+
+//- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+//{
+//    return self.footer;
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
@@ -766,7 +825,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 }
 
 - (void)tokenizeText {
-	NSLog(@"%@", self.text);
+	//NSLog(@"%@", self.text);
 	if (![self.text isEqualToString:kTextEmpty] && ![self.text isEqualToString:kTextHidden]){
 		for (NSString * component in [self.text componentsSeparatedByCharactersInSet:tokenizingCharacters]){
 			[self addTokenWithTitle:[component stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
@@ -900,6 +959,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	CGRect frame = CGRectOffset(bounds, tokenCaret.x + 2, tokenCaret.y + 3);
 	frame.size.width -= (tokenCaret.x + self.rightViewWidth + 10);
 	
+    frame.origin.y -= 12;       // iOS 7 weirdness
 	return frame;
 }
 
@@ -1003,8 +1063,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 		[tokenField removeToken:tokenField.selectedToken];
 		return (![string isEqualToString:@""]);
 	}
-	//NSLog(@"%@", range);
-	NSLog(@"%@", string);
+	//NSLog(@"%@", string);
     NSUInteger rn = [string rangeOfCharacterFromSet:tokenField.tokenizingCharacters].location;
 	if (rn != NSNotFound){
 		[tokenField tokenizeText];

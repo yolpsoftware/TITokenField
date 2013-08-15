@@ -105,9 +105,9 @@
 
 - (BOOL)tokenField:(TITokenField *)tokenField willRemoveToken:(TIToken *)token {
 	
-	if ([token.title isEqualToString:@"Tom Irving"]){
-		return NO;
-	}
+	//if ([token.title isEqualToString:@"Tom Irving"]){
+	//	return NO;
+	//}
 	
 	return YES;
 }

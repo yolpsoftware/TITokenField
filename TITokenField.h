@@ -68,6 +68,8 @@
 	
 	NSArray * sourceArray;
 	NSMutableArray * resultsArray;
+
+    NSString * footer;
 	
 	TITokenField * tokenField;
 	
@@ -81,6 +83,7 @@
 @property (nonatomic, readonly) UIView * contentView;
 @property (nonatomic, copy) NSArray * sourceArray;
 @property (nonatomic, readonly) NSArray * tokenTitles;
+@property (nonatomic, copy) NSString * footer;
 
 - (id)initWithFrame:(CGRect)frame addressType:(BOOL)sms prompt:(NSString*)prompt;
 
