@@ -561,12 +561,21 @@
 			         
             NSIndexPath * idx = [NSIndexPath indexPathForRow:scrollToRow inSection:0];
 			CGRect rowRect = [self.tableView rectForRowAtIndexPath:idx];
-            rowRect.origin.y -= 20;
+            if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {}
+            else {
+                rowRect.origin.y -= 20;
+            }
 
 			[UIView animateWithDuration:0.3 animations:^{
 				[self.tableView setContentOffset:rowRect.origin animated:NO];
 				// size is from the token till the beginning of the keyboard
-				resultsTable.frame = CGRectMake(0, tokenField.frame.size.height + 1+20, self.view.bounds.size.width, self.view.bounds.size.height - _keyboardHeight - tokenField.frame.size.height);
+                if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+                    resultsTable.frame = CGRectMake(0, tokenField.frame.size.height + 1, self.view.bounds.size.width, self.view.bounds.size.height - _keyboardHeight - tokenField.frame.size.height);
+                }
+                else {
+                    resultsTable.frame = CGRectMake(0, tokenField.frame.size.height + 1+20, self.view.bounds.size.width, self.view.bounds.size.height - _keyboardHeight - tokenField.frame.size.height);
+                }
+				
 			} completion:^(BOOL finished) {
 				// Make it visible only if the the result table is still
 				// meant to be visible. For example the user might have
