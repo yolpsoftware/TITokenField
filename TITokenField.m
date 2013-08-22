@@ -753,7 +753,10 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 }
 
 - (CGFloat)fontLineHeight {
-    return 18.0f; // self.font.lineHeight
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+        return self.font.lineHeight;
+    }
+    else return 18.0f;
 }
 
 - (CGFloat)layoutTokensInternal {
@@ -926,8 +929,13 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	
 	CGRect frame = CGRectOffset(bounds, tokenCaret.x + 2, tokenCaret.y + 3);
 	frame.size.width -= (tokenCaret.x + self.rightViewWidth + 10);
-    // temporary fix
-    frame.origin.y -= (10 + self.numberOfLines)*self.numberOfLines;
+    
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {}
+    else
+    {
+        // temporary fix for iOS 7
+        frame.origin.y -= (10 + self.numberOfLines)*self.numberOfLines;
+    }
 	return frame;
 }
 
