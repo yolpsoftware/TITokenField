@@ -100,6 +100,8 @@
 
 @property (nonatomic, strong) TITokenTableView *tableView;
 
+@property (nonatomic, readonly) UITableView *resultsTable;
+
 // Default: YES
 @property (nonatomic) BOOL tokenFieldsEditable;
 

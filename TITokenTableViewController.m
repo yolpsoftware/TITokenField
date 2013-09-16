@@ -34,7 +34,7 @@
 
 @implementation TITokenTableViewController
 
-@synthesize showAlreadyTokenized, sourceArray;
+@synthesize showAlreadyTokenized, sourceArray, resultsTable = resultsTable;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
