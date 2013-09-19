@@ -747,7 +747,7 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 - (TIToken *)addTokenWithTitle:(NSString *)title {
 	
 	if (title.length){
-		TIToken * token = [[TIToken alloc] initWithTitle:title representedObject:nil font:self.font];
+		TIToken * token = [[TIToken alloc] initWithTitle:title showTitleOnTouchUp:NO representedObject:nil font:self.font];
 		[self addToken:token];
 		[token release];
 		return token;
@@ -1124,15 +1124,15 @@ CGPathRef CGPathCreateDisclosureIndicatorPath(CGPoint arrowPointFront, CGFloat h
 @synthesize maxWidth;
 
 #pragma mark Init
-- (id)initWithTitle:(NSString *)aTitle {
-	return [self initWithTitle:aTitle representedObject:nil];
+- (id)initWithTitle:(NSString *)aTitle showTitleOnTouchUp:(BOOL)showTitleOnTouchUp {
+	return [self initWithTitle:aTitle showTitleOnTouchUp:showTitleOnTouchUp representedObject:nil];
 }
 
-- (id)initWithTitle:(NSString *)aTitle representedObject:(id)object {
-	return [self initWithTitle:aTitle representedObject:object font:[UIFont systemFontOfSize:14]];
+- (id)initWithTitle:(NSString *)aTitle showTitleOnTouchUp:(BOOL)showTitleOnTouchUp representedObject:(id)object {
+	return [self initWithTitle:aTitle showTitleOnTouchUp:showTitleOnTouchUp representedObject:object font:[UIFont systemFontOfSize:14]];
 }
 
-- (id)initWithTitle:(NSString *)aTitle representedObject:(id)object font:(UIFont *)aFont {
+- (id)initWithTitle:(NSString *)aTitle showTitleOnTouchUp:(BOOL)showTitleOnTouchUp representedObject:(id)object font:(UIFont *)aFont {
 	
 	if ((self = [super init])){
 		
@@ -1147,9 +1147,16 @@ CGPathRef CGPathCreateDisclosureIndicatorPath(CGPoint arrowPointFront, CGFloat h
 		
 		[self setBackgroundColor:[UIColor clearColor]];
 		[self sizeToFit];
+        
+        if (showTitleOnTouchUp)
+            [self addTarget:self action:@selector(handleTokenTouchUp) forControlEvents:UIControlEventTouchUpInside];
 	}
 	
 	return self;
+}
+
+- (void)handleTokenTouchUp {
+    [[[UIAlertView alloc] initWithTitle:@"title" message:title delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
 }
 
 #pragma mark Property Overrides
