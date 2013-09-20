@@ -17,7 +17,7 @@
 	
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-    TokenTableExampleViewController * viewController = [[TokenTableExampleViewController alloc] init];
+    TokenTableExampleViewController * viewController = [[TokenTableExampleViewController alloc] initWithType:YES andPrompt:@"Hello:"];
 	viewController.tokenDataSource = viewController;
     viewController.delegate = viewController;
 
@@ -28,6 +28,12 @@
     [window makeKeyAndVisible];
 
     return YES;
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    UINavigationController* nav = (UINavigationController*)window.rootViewController;
+    TokenTableExampleViewController* exampleViewController = (TokenTableExampleViewController*)[nav.viewControllers objectAtIndex:0];
+    NSArray* tokens = [exampleViewController getTokens];
 }
 
 @end

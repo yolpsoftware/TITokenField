@@ -7,6 +7,7 @@
 //
 
 #import "TITokenField.h"
+#import "TIContact.h"
 #import <QuartzCore/QuartzCore.h>
 
 //==========================================================
@@ -731,6 +732,16 @@ NSString * const kTextHidden = @"\u200D"; // Zero-Width Joiner
 	}
 	
 	if (textChanged) [self sendActionsForControlEvents:UIControlEventEditingChanged];
+}
+
+- (NSArray*)getTokens {
+    NSMutableArray* result = [[NSMutableArray alloc] init];
+    for (TIToken* token in tokens) {
+        TIContact* contact = (TIContact*)token.representedObject;
+        [result addObject:contact];
+    }
+
+    return result;
 }
 
 - (void)tokenTouchDown:(TIToken *)token {

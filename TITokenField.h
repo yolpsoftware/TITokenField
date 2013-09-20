@@ -93,6 +93,7 @@
 @property (nonatomic) BOOL showTokenFields;
 
 - (void)updateContentSize;
+- (NSArray*)getTokens;
 
 @end
 
