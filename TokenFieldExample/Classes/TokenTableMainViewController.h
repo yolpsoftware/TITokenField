@@ -17,7 +17,10 @@
 
     CGFloat _oldHeight;
 
-
 }
+
+-(id)initWithType:(BOOL)sms andPrompt:(NSString*)prompt;
+
+-(NSArray*)getTokens;
 
 @end
