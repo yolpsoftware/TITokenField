@@ -1161,9 +1161,21 @@ CGPathRef CGPathCreateDisclosureIndicatorPath(CGPoint arrowPointFront, CGFloat h
 		
 		[self setBackgroundColor:[UIColor clearColor]];
 		[self sizeToFit];
+        
+        [self addTarget:self action:@selector(onTouchedUpInside) forControlEvents:UIControlEventTouchUpInside];
 	}
 	
 	return self;
+}
+
+- (void)onTouchedUpInside {
+    if (representedObject != nil) {
+        TIContact* contact = (TIContact*)representedObject;
+        if (contact != nil) {
+            UIAlertView* view = [[UIAlertView alloc] initWithTitle:contact.fullName message:contact.email delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [view show];
+        }
+    }
 }
 
 #pragma mark Property Overrides
