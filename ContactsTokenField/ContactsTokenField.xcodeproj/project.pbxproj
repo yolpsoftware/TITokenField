@@ -8,22 +8,31 @@
 
 /* Begin PBXBuildFile section */
 		DD7D39C41584FE1900990C5A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD7D39C31584FE1900990C5A /* Foundation.framework */; };
-		DD7D39CA1584FE1900990C5A /* ContactsTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = DD7D39C91584FE1900990C5A /* ContactsTokenField.m */; };
 		DD7D39D41584FE2900990C5A /* Names.h in Headers */ = {isa = PBXBuildFile; fileRef = DD7D39D01584FE2900990C5A /* Names.h */; };
 		DD7D39D51584FE2900990C5A /* Names.m in Sources */ = {isa = PBXBuildFile; fileRef = DD7D39D11584FE2900990C5A /* Names.m */; };
 		DD7D39D61584FE2900990C5A /* TITokenField.h in Headers */ = {isa = PBXBuildFile; fileRef = DD7D39D21584FE2900990C5A /* TITokenField.h */; };
 		DD7D39D71584FE2900990C5A /* TITokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = DD7D39D31584FE2900990C5A /* TITokenField.m */; };
+		DDFF7D8817EC49CA006ACBE4 /* TIContact.h in Headers */ = {isa = PBXBuildFile; fileRef = DDFF7D8417EC49CA006ACBE4 /* TIContact.h */; };
+		DDFF7D8917EC49CA006ACBE4 /* TIContact.m in Sources */ = {isa = PBXBuildFile; fileRef = DDFF7D8517EC49CA006ACBE4 /* TIContact.m */; };
+		DDFF7D8A17EC49CA006ACBE4 /* TITokenTableViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = DDFF7D8617EC49CA006ACBE4 /* TITokenTableViewController.h */; };
+		DDFF7D8B17EC49CA006ACBE4 /* TITokenTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDFF7D8717EC49CA006ACBE4 /* TITokenTableViewController.m */; };
+		DDFF7D8E17EC49E3006ACBE4 /* TokenTableMainViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = DDFF7D8C17EC49E3006ACBE4 /* TokenTableMainViewController.h */; };
+		DDFF7D8F17EC49E3006ACBE4 /* TokenTableMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDFF7D8D17EC49E3006ACBE4 /* TokenTableMainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		DD7D39C01584FE1900990C5A /* libContactsTokenField.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libContactsTokenField.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD7D39C31584FE1900990C5A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		DD7D39C81584FE1900990C5A /* ContactsTokenField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactsTokenField.h; sourceTree = "<group>"; };
-		DD7D39C91584FE1900990C5A /* ContactsTokenField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactsTokenField.m; sourceTree = "<group>"; };
 		DD7D39D01584FE2900990C5A /* Names.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Names.h; path = ../../Names.h; sourceTree = "<group>"; };
 		DD7D39D11584FE2900990C5A /* Names.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Names.m; path = ../../Names.m; sourceTree = "<group>"; };
 		DD7D39D21584FE2900990C5A /* TITokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TITokenField.h; path = ../../TITokenField.h; sourceTree = "<group>"; };
 		DD7D39D31584FE2900990C5A /* TITokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TITokenField.m; path = ../../TITokenField.m; sourceTree = "<group>"; };
+		DDFF7D8417EC49CA006ACBE4 /* TIContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TIContact.h; path = ../../TIContact.h; sourceTree = "<group>"; };
+		DDFF7D8517EC49CA006ACBE4 /* TIContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TIContact.m; path = ../../TIContact.m; sourceTree = "<group>"; };
+		DDFF7D8617EC49CA006ACBE4 /* TITokenTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TITokenTableViewController.h; path = ../../TITokenTableViewController.h; sourceTree = "<group>"; };
+		DDFF7D8717EC49CA006ACBE4 /* TITokenTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TITokenTableViewController.m; path = ../../TITokenTableViewController.m; sourceTree = "<group>"; };
+		DDFF7D8C17EC49E3006ACBE4 /* TokenTableMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TokenTableMainViewController.h; path = ../../TokenFieldExample/Classes/TokenTableMainViewController.h; sourceTree = "<group>"; };
+		DDFF7D8D17EC49E3006ACBE4 /* TokenTableMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TokenTableMainViewController.m; path = ../../TokenFieldExample/Classes/TokenTableMainViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,12 +75,16 @@
 		DD7D39C51584FE1900990C5A /* ContactsTokenField */ = {
 			isa = PBXGroup;
 			children = (
+				DDFF7D8C17EC49E3006ACBE4 /* TokenTableMainViewController.h */,
+				DDFF7D8D17EC49E3006ACBE4 /* TokenTableMainViewController.m */,
+				DDFF7D8417EC49CA006ACBE4 /* TIContact.h */,
+				DDFF7D8517EC49CA006ACBE4 /* TIContact.m */,
+				DDFF7D8617EC49CA006ACBE4 /* TITokenTableViewController.h */,
+				DDFF7D8717EC49CA006ACBE4 /* TITokenTableViewController.m */,
 				DD7D39D01584FE2900990C5A /* Names.h */,
 				DD7D39D11584FE2900990C5A /* Names.m */,
 				DD7D39D21584FE2900990C5A /* TITokenField.h */,
 				DD7D39D31584FE2900990C5A /* TITokenField.m */,
-				DD7D39C81584FE1900990C5A /* ContactsTokenField.h */,
-				DD7D39C91584FE1900990C5A /* ContactsTokenField.m */,
 				DD7D39C61584FE1900990C5A /* Supporting Files */,
 			);
 			path = ContactsTokenField;
@@ -91,8 +104,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDFF7D8817EC49CA006ACBE4 /* TIContact.h in Headers */,
 				DD7D39D41584FE2900990C5A /* Names.h in Headers */,
 				DD7D39D61584FE2900990C5A /* TITokenField.h in Headers */,
+				DDFF7D8E17EC49E3006ACBE4 /* TokenTableMainViewController.h in Headers */,
+				DDFF7D8A17EC49CA006ACBE4 /* TITokenTableViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,8 +163,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD7D39CA1584FE1900990C5A /* ContactsTokenField.m in Sources */,
+				DDFF7D8B17EC49CA006ACBE4 /* TITokenTableViewController.m in Sources */,
+				DDFF7D8917EC49CA006ACBE4 /* TIContact.m in Sources */,
 				DD7D39D51584FE2900990C5A /* Names.m in Sources */,
+				DDFF7D8F17EC49E3006ACBE4 /* TokenTableMainViewController.m in Sources */,
 				DD7D39D71584FE2900990C5A /* TITokenField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -161,7 +179,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -186,7 +204,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";

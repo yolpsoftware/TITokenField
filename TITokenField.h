@@ -93,7 +93,6 @@
 @property (nonatomic) BOOL showTokenFields;
 
 - (void)updateContentSize;
-- (NSArray*)getTokens;
 
 @end
 
@@ -146,6 +145,7 @@ typedef enum {
 - (void)setVisible:(BOOL)visible animated:(BOOL)animated;
 
 - (void)addToken:(TIToken *)title;
+- (void)addToken:(TIToken *)token untokenizeAfterAdding:(BOOL)untokenize;
 - (TIToken *)addTokenWithTitle:(NSString *)title;
 - (TIToken *)addTokenWithTitle:(NSString *)title representedObject:(id)object;
 - (void)addTokens:(NSArray *)tokensArray;

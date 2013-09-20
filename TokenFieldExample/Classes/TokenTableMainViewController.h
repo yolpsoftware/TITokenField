@@ -21,6 +21,8 @@
 
 -(id)initWithType:(BOOL)sms andPrompt:(NSString*)prompt;
 
+-(void)initialize:(NSArray*)contacts;
+
 -(NSArray*)getTokens;
 
 @end

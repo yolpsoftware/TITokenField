@@ -29,9 +29,21 @@
         _typeSms = sms;
 		//_tokenFieldTitlesCompact = @[prompt];
         //_oldHeight = kOtherCellBodyHeight;
+        
+        self.tokenDataSource = self;
+        self.delegate = self;
     }
 
     return self;
+}
+
+-(void)initialize:(NSArray*)contacts {
+    TITokenField* tokenField = [super tokenFieldForPrompt:_prompt];
+    [tokenField removeAllTokens];
+    for (TIContact* contact in contacts) {
+        [tokenField addToken:[[TIToken alloc] initWithTitle:contact.fullName representedObject:contact] untokenizeAfterAdding:NO];
+    }
+    //[tokenField tokenizeText];
 }
 
 - (void)viewDidLoad
@@ -69,6 +81,11 @@
     }
     CFRelease(addressBook);
     [self loadFromAddressBook];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    TITokenField* tokenField = [super tokenFieldForPrompt:_prompt];
+    [tokenField becomeFirstResponder];
 }
 
 - (void)showNoAuthWarningSign {
