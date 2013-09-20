@@ -7,7 +7,7 @@
 #import "TITokenTableViewController.h"
 
 
-@interface TokenTableExampleViewController : TITokenTableViewController <TITokenTableViewDataSource, TITokenTableViewControllerDelegate, UITextViewDelegate> {
+@interface TokenTableMainViewController : TITokenTableViewController <TITokenTableViewDataSource, TITokenTableViewControllerDelegate, UITextViewDelegate> {
 
 
     NSArray *_tokenFieldTitlesAll;

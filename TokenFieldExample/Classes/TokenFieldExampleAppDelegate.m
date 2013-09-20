@@ -7,7 +7,7 @@
 //
 
 #import "TokenFieldExampleAppDelegate.h"
-#import "TokenFieldExampleViewController.h"
+#import "TokenTableMainViewController.h"
 #import "TITokenTableViewController.h"
 #import "TokenTableExampleViewController.h"
 
@@ -17,7 +17,7 @@
 	
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
-    TokenTableExampleViewController * viewController = [[TokenTableExampleViewController alloc] initWithType:YES andPrompt:@"Hello:"];
+    TokenTableMainViewController * viewController = [[TokenTableMainViewController alloc] initWithType:YES andPrompt:@"Hello:"];
 	viewController.tokenDataSource = viewController;
     viewController.delegate = viewController;
 
@@ -32,7 +32,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     UINavigationController* nav = (UINavigationController*)window.rootViewController;
-    TokenTableExampleViewController* exampleViewController = (TokenTableExampleViewController*)[nav.viewControllers objectAtIndex:0];
+    TokenTableMainViewController* exampleViewController = (TokenTableMainViewController*)[nav.viewControllers objectAtIndex:0];
     NSArray* tokens = [exampleViewController getTokens];
 }
 

@@ -3,14 +3,14 @@
 //
 
 
-#import "TokenTableExampleViewController.h"
+#import "TokenTableMainViewController.h"
 #import "TIContact.h"
 #import <AddressBook/AddressBook.h>
 
 
 //#define kOtherCellBodyHeight 300
 
-@interface TokenTableExampleViewController () {
+@interface TokenTableMainViewController () {
     BOOL _typeSms;
     NSString* _prompt;
     NSMutableArray * _masterList;
@@ -19,7 +19,7 @@
 @property (nonatomic) BOOL showCompactFields;
 @end
 
-@implementation TokenTableExampleViewController
+@implementation TokenTableMainViewController
 
 - (id)initWithType:(BOOL)sms andPrompt:(NSString*)prompt {
     self = [super init];
